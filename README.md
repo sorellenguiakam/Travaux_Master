@@ -376,13 +376,13 @@ Pour plus de solutions, consultez : `0_GUIDE_DEMARRAGE/troubleshooting.md`
 
 Si vous rencontrez un problème technique :
 1. Vérifier `0_GUIDE_DEMARRAGE/troubleshooting.md`
-2. Contacter l'encadrant : Prof. NANA Engo
+2. Contacter l'encadrant : Dr. TCHAPET NJAFA Jean-Pierre
 3. Documenter le problème : message d'erreur complet, étapes pour reproduire
 
 ### Demander de l'Aide
 
 **Ressources disponibles :**
-- **Encadrant académique** : Prof. NANA Engo (réunions hebdomadaires)
+- **Encadrant académique** : Dr. TCHAPET NJAFA Jean-Pierre (réunions hebdomadaires)
 - **Forums en ligne** : Stack Overflow, Reddit r/machinelearning
 - **Documentation** : Voir section "Ressources Pédagogiques" ci-dessus
 
@@ -406,7 +406,7 @@ Ce projet est destiné à un usage académique dans le cadre du Master 1 de Sore
 
 **Développement :**
 - Sorelle (Étudiante M1, Physique Atomique, Moléculaire et Biophysique)
-- Prof. NANA Engo (Encadrant)
+- Dr. TCHAPET NJAFA Jean-Pierre (Encadrant)
 - Claude 4.5 (Assistant IA pour la structure du projet)
 
 **Données :**
