@@ -1,0 +1,29 @@
+# ===================================================================
+# REQUIREMENTS_BASE.TXT - Dépendances Python de base
+# Projet : Détection précoce du Diabète Type 1 - Cameroun
+# Date : Novembre 2025
+# ===================================================================
+
+# === CALCUL SCIENTIFIQUE ===
+numpy>=1.24.0
+scipy>=1.10.0
+pandas>=2.0.0
+
+# === MACHINE LEARNING ===
+scikit-learn>=1.3.0
+imbalanced-learn>=0.11.0    # Gestion des classes déséquilibrées (SMOTE)
+
+# === VISUALISATION ===
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.14.0
+
+# === JUPYTER ===
+jupyter>=1.0.0
+notebook>=6.5.0
+ipywidgets>=8.0.0
+
+# === UTILITAIRES ===
+pyyaml>=6.0              # Lecture fichiers config.yaml
+joblib>=1.3.0            # Sauvegarde modèles ML
+tqdm>=4.65.0             # Barres de progression

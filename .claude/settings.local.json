@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(python:*)",
+      "Bash(python3:*)",
+      "Bash(wget:*)",
+      "Bash(find:*)",
+      "Bash(sort:*)",
+      "Bash(cd:*)",
+      "Bash(for dir in */)",
+      "Bash(do if [ ! -f \"$dir/README.md\" ])",
+      "Bash(then echo \"  ❌ Manque: $dir/README.md\")",
+      "Bash(else echo \"  ✅ $dir/README.md\")",
+      "Bash(fi)",
+      "Bash(done)",
+      "Bash(pdflatex:*)",
+      "Bash(tree:*)",
+      "Bash(for dir in 0_GUIDE_DEMARRAGE 1_CONTEXTE_THEORIQUE 2_DONNEES 3_NOTEBOOKS_PEDAGOGIQUES 4_SCRIPTS_PRODUCTION 5_APPLICATION_DEMO 6_MEMOIRE_LATEX 7_PLANIFICATION 8_RESSOURCES_COMPLEMENTAIRES)",
+      "Bash(do if [ -f \"$dir/README.md\" ])",
+      "Bash(then echo \"  ✅ $dir/README.md\")",
+      "Bash(else echo \"  ❌ MANQUE: $dir/README.md\")",
+      "Bash(while read f)",
+      "Bash(do echo \"  📦 $f\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

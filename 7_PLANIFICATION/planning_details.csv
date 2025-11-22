@@ -1,0 +1,30 @@
+Tâche,Début,Fin,Durée,Catégorie
+1.1 Installation environnement Python,2025-11-22,2025-11-24,2,Installation
+1.2 Découverte des notebooks,2025-11-24,2025-11-27,3,Installation
+1.3 Import bibliographie dans Zotero,2025-11-25,2025-11-29,4,Installation
+2.1 Semaine 1: Python + ML de base,2025-11-22,2025-11-29,7,Apprentissage
+2.2 Semaine 2: Exploration données,2025-11-29,2025-12-06,7,Apprentissage
+2.3 Semaine 3: Modèles simples,2025-12-06,2025-12-13,7,Apprentissage
+2.4 Semaines 4-5: Modèles avancés,2025-12-13,2025-12-27,14,Apprentissage
+2.5 Semaine 6: Optimisation,2025-12-27,2026-01-03,7,Apprentissage
+2.6 Semaine 7: Interprétabilité,2026-01-03,2026-01-10,7,Apprentissage
+3.1 Lecture articles DT1 Afrique,2025-11-29,2025-12-20,21,Bibliographie
+3.2 Lecture articles ML médical,2025-12-06,2025-12-27,21,Bibliographie
+3.3 Lecture articles techniques,2025-12-20,2026-01-10,21,Bibliographie
+4.1 Tests application Streamlit,2026-01-10,2026-01-17,7,Application
+4.2 Ajout fonctionnalités,2026-01-17,2026-01-24,7,Application
+4.3 Finalisation interface,2026-01-24,2026-01-31,7,Application
+5.1 Rédaction Introduction,2026-01-10,2026-01-24,14,Rédaction
+5.2 Rédaction État de l'art,2026-01-17,2026-02-07,21,Rédaction
+5.3 Rédaction Méthodologie,2026-01-31,2026-02-21,21,Rédaction
+5.4 Génération résultats + figures,2026-02-14,2026-02-28,14,Rédaction
+5.5 Rédaction Résultats,2026-02-21,2026-03-07,14,Rédaction
+5.6 Rédaction Discussion,2026-02-28,2026-03-14,14,Rédaction
+5.7 Rédaction Conclusion + Abstract,2026-03-07,2026-03-14,7,Rédaction
+6.1 Relecture et corrections,2026-03-21,2026-04-04,14,Finalisation
+6.2 Mise en page finale,2026-03-28,2026-04-04,7,Finalisation
+6.3 Impression et reliure,2026-04-04,2026-04-07,3,Finalisation
+6.4 Dépôt mémoire,2026-04-07,2026-04-08,1,Finalisation
+7.1 Préparation slides,2026-04-11,2026-04-18,7,Soutenance
+7.2 Répétitions,2026-04-18,2026-04-25,7,Soutenance
+7.3 SOUTENANCE,2026-04-25,2026-04-26,1,Soutenance

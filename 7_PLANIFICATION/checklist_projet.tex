@@ -1,0 +1,551 @@
+% CHECKLIST PROJET MASTER 2 - DT1 CAMEROUN
+% Étudiante: Sorelle
+% Encadrant: Dr. TCHAPET NJAFA Jean-Pierre
+
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[margin=2cm]{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+
+% Configuration
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    pdftitle={Checklist Projet Master 2 - DT1 Cameroun},
+    pdfauthor={Sorelle}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textbf{Projet Master 2 - DT1 Cameroun}}
+\fancyhead[R]{Sorelle - 2025/2026}
+\fancyfoot[C]{\thepage}
+
+% Commandes personnalisées
+\newcommand{\checkbox}{\large$\square$}
+\newcommand{\checkboxdone}{\large$\boxtimes$}
+\newcommand{\priorite}[1]{\textcolor{red}{\textbf{[#1]}}}
+\newcommand{\duree}[1]{\textcolor{blue}{\textit{(#1)}}}
+
+\title{\textbf{\Huge CHECKLIST PROJET}\\[0.5cm]
+       \Large Détection précoce du Diabète Type 1\\
+       au Cameroun par Machine Learning\\[0.3cm]
+       \large Master 2 Biophysique}
+\author{Étudiante: \textbf{Sorelle}\\
+        Encadrant: Dr. TCHAPET NJAFA Jean-Pierre\\
+        Conseiller: Prof. NANA ENGO Serge Guy}
+\date{Novembre 2025 - Mai 2026}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\vspace{1cm}
+
+\begin{center}
+\fbox{\parbox{0.9\textwidth}{
+\centering
+\textbf{INSTRUCTIONS D'UTILISATION}\\[0.3cm]
+\begin{itemize}[leftmargin=*]
+    \item Imprimez ce document et cochez les cases au fur et à mesure
+    \item \priorite{P1} = Priorité critique | \priorite{P2} = Important | \priorite{P3} = Optionnel
+    \item \duree{Xj/Xs} = Durée estimée (jours/semaines)
+    \item Consultez le diagramme de Gantt pour la planification détaillée
+\end{itemize}
+}}
+\end{center}
+
+\newpage
+
+\section*{PHASE 1: INSTALLATION ET PRISE EN MAIN \duree{1-2 semaines}}
+
+\subsection*{1.1 Installation de l'environnement \priorite{P1}}
+
+\begin{itemize}[label=\checkbox]
+    \item Installer Python 3.9+ (Anaconda recommandé)
+    \item Créer l'environnement virtuel: \texttt{conda create -n dt1\_cameroun python=3.9}
+    \item Activer l'environnement: \texttt{conda activate dt1\_cameroun}
+    \item Installer les dépendances: \texttt{pip install -r requirements\_full.txt}
+    \item Tester l'installation: \texttt{python -c "import pandas; import sklearn; print('OK')"}
+    \item Installer Jupyter: \texttt{pip install jupyter notebook}
+    \item Lancer Jupyter: \texttt{jupyter notebook}
+\end{itemize}
+
+\subsection*{1.2 Découverte du projet \priorite{P1}}
+
+\begin{itemize}[label=\checkbox]
+    \item Lire \texttt{README.md}
+    \item Lire \texttt{GUIDE\_EXECUTION.md}
+    \item Lire \texttt{demarche\_methodologique\_sorelle.md}
+    \item Explorer la structure des dossiers
+    \item Vérifier que tous les notebooks s'ouvrent correctement
+\end{itemize}
+
+\subsection*{1.3 Gestion bibliographique \priorite{P1}}
+
+\begin{itemize}[label=\checkbox]
+    \item Installer Zotero: \url{https://www.zotero.org/download/}
+    \item Créer un compte Zotero
+    \item Importer les 36 PDFs dans Zotero (glisser-déposer)
+    \item Vérifier les métadonnées (titre, auteurs, année, journal)
+    \item Créer des collections par thème: DT1\_Afrique, Biomarqueurs, ML\_Algo, etc.
+    \item Installer le plugin Zotero pour LaTeX
+    \item Exporter la bibliothèque: Fichier → Exporter → Format BibTeX
+    \item Sauvegarder dans: \texttt{6\_MEMOIRE\_LATEX/bibliographie.bib}
+\end{itemize}
+
+\newpage
+
+\section*{PHASE 2: APPRENTISSAGE MACHINE LEARNING \duree{7 semaines}}
+
+\subsection*{2.1 Semaine 1: Introduction Python + ML \priorite{P1} \duree{1 semaine}}
+
+\begin{itemize}[label=\checkbox]
+    \item Ouvrir le notebook: \texttt{Semaine01\_Introduction\_Python\_ML.ipynb}
+    \item \textbf{Section 1:} Comprendre NumPy (vecteurs, matrices)
+    \item \textbf{Section 2:} Maîtriser Pandas (DataFrame, manipulation)
+    \item \textbf{Section 3:} Visualisation avec Matplotlib
+    \item \textbf{Section 4:} Premier modèle (Decision Tree)
+    \item \textbf{Exercices:} Compléter les 5 exercices pratiques
+    \item \textbf{Auto-évaluation:} Vérifier les réponses
+    \item \textbf{Validation:} Exécuter toutes les cellules sans erreur
+\end{itemize}
+
+\subsection*{2.2 Semaine 2: Exploration des données \priorite{P1} \duree{1 semaine}}
+
+\begin{itemize}[label=\checkbox]
+    \item Ouvrir: \texttt{Semaine02\_Exploration\_Donnees.ipynb}
+    \item Générer le dataset: \texttt{python 2\_DONNEES/generate\_synthetic\_data.py}
+    \item Vérifier: \texttt{2\_DONNEES/raw/dataset\_dt1\_cameroun\_synthetic.csv}
+    \item Charger et inspecter les données (1000 patients)
+    \item Statistiques descriptives (moyennes, écarts-types)
+    \item Tests statistiques (Shapiro-Wilk, Mann-Whitney)
+    \item Matrice de corrélation
+    \item Visualisations (distributions, boxplots, heatmap)
+    \item Comprendre les biomarqueurs: ANP32A-IT1, ESCO2, NBPF1
+    \item \textbf{Exercices:} Analyser le déséquilibre des classes
+\end{itemize}
+
+\subsection*{2.3 Semaine 3: Modèles simples \priorite{P1} \duree{1 semaine}}
+
+\begin{itemize}[label=\checkbox]
+    \item Ouvrir: \texttt{Semaine03\_Modelisation\_Simple.ipynb}
+    \item \textbf{Modèle 1:} Logistic Regression
+    \item \textbf{Modèle 2:} Decision Tree
+    \item \textbf{Modèle 3:} Random Forest (100 arbres)
+    \item \textbf{Modèle 4:} Support Vector Machine (SVM)
+    \item Calculer les métriques: Accuracy, Precision, Recall, F1, AUC
+    \item Comparer les 4 modèles (tableau + graphiques)
+    \item Tracer les courbes ROC
+    \item Identifier le meilleur modèle selon le Recall
+    \item \textbf{Comprendre:} Pourquoi prioriser le Recall en médecine?
+\end{itemize}
+
+\subsection*{2.4 Semaines 4-5: Modèles avancés \priorite{P1} \duree{2 semaines}}
+
+\begin{itemize}[label=\checkbox]
+    \item Ouvrir: \texttt{Semaine04-05\_Modeles\_Avances.ipynb}
+    \item \textbf{XGBoost:} Version de base
+    \item \textbf{XGBoost:} Avec \texttt{scale\_pos\_weight} (gérer déséquilibre)
+    \item \textbf{LightGBM:} Avec \texttt{class\_weight='balanced'}
+    \item \textbf{SMOTE:} Génération d'échantillons synthétiques DT1
+    \item Random Forest + SMOTE
+    \item Comparer les performances (Recall prioritaire)
+    \item Analyser les Feature Importances
+    \item Comprendre le trade-off Precision/Recall
+    \item Identifier les 3 biomarqueurs les plus importants
+\end{itemize}
+
+\subsection*{2.5 Semaine 6: Optimisation \priorite{P1} \duree{1 semaine}}
+
+\begin{itemize}[label=\checkbox]
+    \item Ouvrir: \texttt{Semaine06\_Optimisation\_Validation.ipynb}
+    \item Validation croisée (Stratified K-Fold, k=5)
+    \item GridSearchCV sur Random Forest (exhaustif)
+    \item RandomizedSearchCV sur XGBoost (50 combinaisons)
+    \item Comparer les deux approches
+    \item Sélectionner le modèle final (meilleur Recall)
+    \item Sauvegarder le modèle: \texttt{4\_MODELES/models/final\_model.pkl}
+    \item Sauvegarder les features: \texttt{4\_MODELES/models/features.pkl}
+    \item Tester le chargement du modèle
+    \item Créer le rapport final du modèle
+\end{itemize}
+
+\subsection*{2.6 Semaine 7: Interprétabilité \priorite{P1} \duree{1 semaine}}
+
+\begin{itemize}[label=\checkbox]
+    \item Ouvrir: \texttt{Semaine07\_Interpretation\_Resultats.ipynb}
+    \item Charger le modèle final sauvegardé
+    \item Calculer SHAP values (TreeExplainer)
+    \item Générer Summary Plot (importance globale)
+    \item Générer Dependence Plots (effet de chaque feature)
+    \item Générer Force Plots (explications individuelles)
+    \item Analyser les erreurs de prédiction (Faux Positifs, Faux Négatifs)
+    \item Créer les figures pour le mémoire (haute résolution)
+    \item Sauvegarder dans: \texttt{6\_MEMOIRE\_LATEX/figures/}
+    \item Interpréter cliniquement les résultats
+\end{itemize}
+
+\newpage
+
+\section*{PHASE 3: LECTURES BIBLIOGRAPHIQUES \duree{Parallèle aux notebooks}}
+
+\subsection*{3.1 Articles prioritaires DT1 Afrique \priorite{P1} \duree{2 semaines}}
+
+\begin{itemize}[label=\checkbox]
+    \item \textbf{[CRITIQUE]} Katte 2023 - Phénotype DT1 en Afrique subsaharienne
+    \item Oram 2025 - Impact ancestry sur GRS (medRxiv)
+    \item Kengne 2013 - Diabète et obésité en Afrique (Heart/BMJ)
+    \item Prendre des notes dans Zotero (annotations PDF)
+    \item Rédiger fiche de lecture pour chaque article (1 page)
+\end{itemize}
+
+\subsection*{3.2 Articles biomarqueurs \priorite{P1} \duree{1 semaine}}
+
+\begin{itemize}[label=\checkbox]
+    \item \textbf{[CRITIQUE]} Endocrine Journal 2023 - ANP32A-IT1, ESCO2, NBPF1
+    \item Comprendre les 3 biomarqueurs et leur AUC > 0.8
+    \item Noter les valeurs seuils et performances diagnostiques
+\end{itemize}
+
+\subsection*{3.3 Articles ML médical \priorite{P2} \duree{2 semaines}}
+
+\begin{itemize}[label=\checkbox]
+    \item Contreras 2018 - IA pour le diabète (JMIR)
+    \item Sendak 2020 - ML en contexte clinique réel (arXiv)
+    \item Comprendre les défis du déploiement clinique
+\end{itemize}
+
+\subsection*{3.4 Articles techniques ML \priorite{P2} \duree{2 semaines}}
+
+\begin{itemize}[label=\checkbox]
+    \item Chen 2016 - XGBoost (algorithme principal)
+    \item Ke 2017 - LightGBM
+    \item Breiman 2001 - Random Forests
+    \item Lundberg 2017 - SHAP (interprétabilité)
+    \item Chawla 2002 - SMOTE (déséquilibre)
+\end{itemize}
+
+\subsection*{3.5 Livres de référence \priorite{P3} \duree{En continu}}
+
+\begin{itemize}[label=\checkbox]
+    \item Hastie 2009 - Elements of Statistical Learning (chapitres 9, 10, 15)
+    \item James 2021 - Intro Statistical Learning (chapitres 4, 5, 8)
+    \item Parcourir les chapitres pertinents (pas lecture intégrale)
+\end{itemize}
+
+\newpage
+
+\section*{PHASE 4: APPLICATION STREAMLIT \duree{3 semaines}}
+
+\subsection*{4.1 Tests de l'application \priorite{P1} \duree{1 semaine}}
+
+\begin{itemize}[label=\checkbox]
+    \item Lancer l'app: \texttt{streamlit run 5\_APPLICATION\_DEMO/app\_streamlit.py}
+    \item Tester la page d'accueil
+    \item Tester la prédiction manuelle (saisie des 7 features)
+    \item Tester l'upload CSV (fichier d'exemple)
+    \item Vérifier les prédictions et probabilités
+    \item Identifier les bugs éventuels
+\end{itemize}
+
+\subsection*{4.2 Ajout de fonctionnalités \priorite{P2} \duree{1 semaine}}
+
+\begin{itemize}[label=\checkbox]
+    \item Intégrer le modèle final optimisé (remplacer modèle de démo)
+    \item Ajouter graphiques SHAP pour explications
+    \item Ajouter statistiques sur les prédictions batch
+    \item Améliorer les messages d'erreur
+    \item Ajouter validation des inputs
+\end{itemize}
+
+\subsection*{4.3 Finalisation interface \priorite{P2} \duree{1 semaine}}
+
+\begin{itemize}[label=\checkbox]
+    \item Améliorer le design (couleurs, mise en page)
+    \item Ajouter logo/bannière
+    \item Ajouter page "À propos" détaillée
+    \item Documenter l'utilisation (README dans dossier app)
+    \item Tester sur différents navigateurs
+    \item Créer capture d'écran pour le mémoire
+\end{itemize}
+
+\newpage
+
+\section*{PHASE 5: RÉDACTION DU MÉMOIRE \duree{12 semaines}}
+
+\subsection*{5.1 Introduction \priorite{P1} \duree{2 semaines}}
+
+\begin{itemize}[label=\checkbox]
+    \item Lire \texttt{01\_introduction.tex} (déjà pré-remplie)
+    \item Compléter le contexte épidémiologique (chiffres IDF)
+    \item Développer la problématique du dataset shift
+    \item Justifier le choix des 3 biomarqueurs
+    \item Formuler clairement les objectifs
+    \item Annoncer le plan du mémoire
+    \item Relire et corriger (orthographe, syntaxe)
+    \item Faire relire par l'encadrant
+\end{itemize}
+
+\subsection*{5.2 État de l'art \priorite{P1} \duree{3 semaines}}
+
+\begin{itemize}[label=\checkbox]
+    \item \textbf{Section 2.1:} DT1 en Afrique (Katte, Kengne, etc.)
+    \item \textbf{Section 2.2:} Biomarqueurs génétiques (Endocrine J., Oram)
+    \item \textbf{Section 2.3:} ML en santé (Contreras, Sendak)
+    \item \textbf{Section 2.4:} Algorithmes ML (XGBoost, RF, SMOTE)
+    \item \textbf{Section 2.5:} Interprétabilité (SHAP, LIME)
+    \item \textbf{Section 2.6:} Défis et limites
+    \item Citer 40-50 références
+    \item Vérifier cohérence des citations LaTeX
+    \item Créer tableau récapitulatif des études
+\end{itemize}
+
+\subsection*{5.3 Méthodologie \priorite{P1} \duree{3 semaines}}
+
+\begin{itemize}[label=\checkbox]
+    \item \textbf{Section 3.1:} Description du dataset (1000 patients synthétiques)
+    \item \textbf{Section 3.2:} Pré-traitement et exploration
+    \item \textbf{Section 3.3:} Algorithmes testés (4 de base + 3 avancés)
+    \item \textbf{Section 3.4:} Gestion du déséquilibre (SMOTE, class\_weight)
+    \item \textbf{Section 3.5:} Optimisation (GridSearch, RandomSearch)
+    \item \textbf{Section 3.6:} Validation croisée (Stratified K-Fold)
+    \item \textbf{Section 3.7:} Métriques d'évaluation (Recall prioritaire)
+    \item \textbf{Section 3.8:} Interprétabilité (SHAP)
+    \item Créer schéma méthodologique (workflow)
+    \item Créer tableau des hyperparamètres
+\end{itemize}
+
+\subsection*{5.4 Résultats \priorite{P1} \duree{2 semaines}}
+
+\begin{itemize}[label=\checkbox]
+    \item \textbf{Générer TOUTES les figures} (depuis notebooks)
+    \item Figure 1: Distribution des biomarqueurs (boxplots)
+    \item Figure 2: Matrice de corrélation
+    \item Figure 3: Comparaison des modèles (barres)
+    \item Figure 4: Courbes ROC comparatives
+    \item Figure 5: Feature Importances (XGBoost final)
+    \item Figure 6: SHAP Summary Plot
+    \item Figure 7: SHAP Dependence Plots (top 3 features)
+    \item Tableau 1: Caractéristiques du dataset
+    \item Tableau 2: Performances des modèles (Accuracy, Precision, Recall, F1, AUC)
+    \item Tableau 3: Hyperparamètres optimaux du modèle final
+    \item Tableau 4: Matrice de confusion
+    \item \textbf{Rédiger:} Présenter les résultats sans interprétation
+    \item Numéroter et légender toutes les figures/tableaux
+\end{itemize}
+
+\subsection*{5.5 Discussion \priorite{P1} \duree{2 semaines}}
+
+\begin{itemize}[label=\checkbox]
+    \item Interpréter les performances (Recall 85-90\% attendu)
+    \item Discuter l'importance des biomarqueurs (ESCO2 > ANP32A-IT1 > NBPF1?)
+    \item Comparer avec la littérature (Endocrine J. 2023)
+    \item Discuter le déséquilibre des classes (impact SMOTE)
+    \item Interpréter SHAP (contribution de chaque feature)
+    \item Discuter les erreurs (FP vs FN, analyse clinique)
+    \item Discuter les limites (données synthétiques, dataset shift)
+    \item Discuter la transférabilité au contexte camerounais
+    \item Discuter l'interprétabilité pour le clinicien
+    \item Proposer des perspectives d'amélioration
+\end{itemize}
+
+\subsection*{5.6 Conclusion + Abstract \priorite{P1} \duree{1 semaine}}
+
+\begin{itemize}[label=\checkbox]
+    \item Rappeler le contexte et les objectifs
+    \item Synthétiser les résultats principaux
+    \item Confirmer/infirmer les hypothèses
+    \item Apports du travail (scientifiques, méthodologiques)
+    \item Limites reconnues
+    \item Perspectives (validation sur données réelles, déploiement)
+    \item Rédiger l'Abstract (200-250 mots, français + anglais)
+    \item Mots-clés (5-7): Diabète Type 1, Machine Learning, XGBoost, Biomarqueurs, etc.
+\end{itemize}
+
+\subsection*{5.7 Annexes et compléments \priorite{P2} \duree{1 semaine}}
+
+\begin{itemize}[label=\checkbox]
+    \item Annexe A: Code source principal (extraits commentés)
+    \item Annexe B: Tableaux de résultats détaillés
+    \item Annexe C: Figures complémentaires
+    \item Liste des abréviations
+    \item Liste des figures
+    \item Liste des tableaux
+    \item Table des matières (automatique LaTeX)
+\end{itemize}
+
+\newpage
+
+\section*{PHASE 6: RÉVISION ET FINALISATION \duree{4 semaines}}
+
+\subsection*{6.1 Relecture et corrections \priorite{P1} \duree{2 semaines}}
+
+\begin{itemize}[label=\checkbox]
+    \item Relecture complète (orthographe, grammaire, syntaxe)
+    \item Vérifier cohérence des citations (bibliographie)
+    \item Vérifier numérotation figures/tableaux
+    \item Vérifier les références croisées LaTeX
+    \item Harmoniser la terminologie
+    \item Vérifier les formules mathématiques
+    \item Soumettre à l'encadrant pour première relecture
+    \item Intégrer les corrections de l'encadrant
+    \item Soumettre au conseiller pour relecture
+    \item Intégrer les corrections du conseiller
+\end{itemize}
+
+\subsection*{6.2 Mise en page finale \priorite{P1} \duree{1 semaine}}
+
+\begin{itemize}[label=\checkbox]
+    \item Compiler LaTeX: \texttt{pdflatex main.tex} (3 fois)
+    \item Compiler BibTeX: \texttt{bibtex main}
+    \item Vérifier PDF final (pagination, marges, qualité figures)
+    \item Vérifier que toutes les figures sont en haute résolution
+    \item Ajuster les sauts de page si nécessaire
+    \item Vérifier les en-têtes et pieds de page
+    \item Générer le PDF final: \texttt{memoire\_sorelle\_dt1\_2026.pdf}
+    \item Vérifier la taille (<60 pages hors annexes)
+\end{itemize}
+
+\subsection*{6.3 Impression et reliure \priorite{P1} \duree{3 jours}}
+
+\begin{itemize}[label=\checkbox]
+    \item Imprimer 1 exemplaire test (vérifier qualité)
+    \item Corriger si nécessaire
+    \item Imprimer 4 exemplaires définitifs (jury + encadrant + vous)
+    \item Relier les exemplaires (reliure spirale ou thermique)
+    \item Graver 2 CD/USB avec: PDF + code source + données + notebooks
+    \item Préparer pochette avec nom, titre, année
+\end{itemize}
+
+\subsection*{6.4 Dépôt du mémoire \priorite{P1} \duree{1 jour}}
+
+\begin{itemize}[label=\checkbox]
+    \item Vérifier la date limite de dépôt (secrétariat)
+    \item Déposer les exemplaires au secrétariat
+    \item Déposer la version numérique (email ou plateforme)
+    \item Obtenir le récépissé de dépôt
+    \item Envoyer copie PDF à l'encadrant et conseiller
+\end{itemize}
+
+\newpage
+
+\section*{PHASE 7: SOUTENANCE \duree{2 semaines}}
+
+\subsection*{7.1 Préparation des slides \priorite{P1} \duree{1 semaine}}
+
+\begin{itemize}[label=\checkbox]
+    \item Créer présentation PowerPoint/Beamer (15-20 slides)
+    \item \textbf{Slide 1:} Page de titre (nom, titre, date, jury)
+    \item \textbf{Slide 2:} Plan de la présentation
+    \item \textbf{Slides 3-4:} Contexte et problématique
+    \item \textbf{Slide 5:} Objectifs
+    \item \textbf{Slides 6-8:} Méthodologie (schéma workflow)
+    \item \textbf{Slides 9-12:} Résultats (figures principales)
+    \item \textbf{Slide 13:} Discussion et interprétation
+    \item \textbf{Slide 14:} Limites et perspectives
+    \item \textbf{Slide 15:} Conclusion
+    \item \textbf{Slide 16:} Remerciements
+    \item Vérifier lisibilité (police >= 20pt, pas trop de texte)
+    \item Ajouter numéros de slides
+    \item Faire valider par l'encadrant
+\end{itemize}
+
+\subsection*{7.2 Répétitions \priorite{P1} \duree{1 semaine}}
+
+\begin{itemize}[label=\checkbox]
+    \item Répétition 1: Seul(e), chronométrer (20 min)
+    \item Répétition 2: Devant l'encadrant (feedback)
+    \item Répétition 3: Devant collègues/famille (questions)
+    \item Préparer réponses aux questions prévisibles:
+    \item \quad - Pourquoi ces biomarqueurs?
+    \item \quad - Pourquoi XGBoost plutôt que RF?
+    \item \quad - Comment gérer le dataset shift?
+    \item \quad - Validation sur données réelles?
+    \item \quad - Déploiement clinique?
+    \item Répétition 4: Conditions réelles (amphi, projecteur)
+    \item Préparer tenue professionnelle
+\end{itemize}
+
+\subsection*{7.3 Jour de la soutenance \priorite{P1}}
+
+\begin{itemize}[label=\checkbox]
+    \item Arriver 30 min en avance
+    \item Tester le projecteur et l'ordinateur
+    \item Avoir une clé USB de secours (slides + PDF mémoire)
+    \item Saluer le jury
+    \item \textbf{PRÉSENTATION:} 20 minutes
+    \item \textbf{QUESTIONS:} 20-30 minutes
+    \item Rester calme et confiant(e)
+    \item Remercier le jury
+    \item \textbf{FÉLICITATIONS! Vous êtes désormais titulaire d'un Master 2!}
+\end{itemize}
+
+\newpage
+
+\section*{ANNEXES}
+
+\subsection*{Contacts importants}
+
+\begin{itemize}
+    \item \textbf{Encadrant:} Dr. TCHAPET NJAFA Jean-Pierre - [email à compléter]
+    \item \textbf{Conseiller:} Prof. NANA ENGO Serge Guy - [email à compléter]
+    \item \textbf{Secrétariat Master:} [contact à compléter]
+    \item \textbf{Bibliothèque universitaire:} [contact à compléter]
+\end{itemize}
+
+\subsection*{Ressources utiles}
+
+\begin{itemize}
+    \item \textbf{Documentation Python:} \url{https://docs.python.org/3/}
+    \item \textbf{Scikit-learn:} \url{https://scikit-learn.org/}
+    \item \textbf{XGBoost:} \url{https://xgboost.readthedocs.io/}
+    \item \textbf{SHAP:} \url{https://shap.readthedocs.io/}
+    \item \textbf{Streamlit:} \url{https://docs.streamlit.io/}
+    \item \textbf{LaTeX:} \url{https://www.overleaf.com/learn}
+    \item \textbf{Zotero:} \url{https://www.zotero.org/support/}
+\end{itemize}
+
+\subsection*{Statistiques du projet}
+
+\begin{center}
+\begin{tabular}{|l|r|}
+\hline
+\textbf{Élément} & \textbf{Quantité} \\
+\hline
+Durée totale & 6 mois (Nov 2025 - Mai 2026) \\
+Notebooks pédagogiques & 6 \\
+Articles scientifiques & 36 PDFs (79 MB) \\
+Références bibliographiques & 64+ \\
+Lignes de code Python & $\sim$2700 \\
+Dataset (patients) & 1000 \\
+Features (variables) & 7 \\
+Algorithmes testés & 7 \\
+Pages mémoire (max) & 60 \\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{2cm}
+
+\begin{center}
+\fbox{\parbox{0.9\textwidth}{
+\centering
+\textbf{BON COURAGE!}\\[0.3cm]
+Ce projet est ambitieux mais parfaitement réalisable en suivant cette checklist.\\
+Travaillez régulièrement, n'hésitez pas à demander de l'aide,\\
+et célébrez chaque étape franchie!\\[0.5cm]
+\textit{``Le succès est la somme de petits efforts répétés jour après jour.''}\\
+-- Robert Collier
+}}
+\end{center}
+
+\end{document}

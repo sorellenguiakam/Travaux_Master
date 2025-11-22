@@ -1,0 +1,124 @@
+\chapter{Introduction}
+\label{chap:introduction}
+
+\section{Contexte et problématique}
+
+Le Diabète de Type 1 (DT1) constitue un enjeu majeur de santé publique à l'échelle mondiale, avec une incidence croissante estimée à 3\% par an \cite{DiabetesAtlas2021}. En Afrique subsaharienne, cette pathologie présente des spécificités cliniques, génétiques et épidémiologiques qui la distinguent significativement des formes observées dans les populations caucasiennes.
+
+\subsection{Le diabète de type 1 en Afrique subsaharienne}
+
+Contrairement aux idées reçues, le DT1 n'est pas rare en Afrique subsaharienne. Des études récentes menées au Cameroun, en Ouganda et au Kenya rapportent une prévalence non négligeable, bien que probablement sous-estimée en raison des difficultés diagnostiques et du manque d'accès aux soins \cite{Mbanya2010,Katte2023}. La mortalité infantile associée au DT1 demeure dramatiquement élevée dans la région, avec des taux de survie à 5 ans inférieurs à 50\% dans certaines zones rurales, principalement dus à un diagnostic tardif et à un accès limité à l'insuline \cite{Atun2017}.
+
+Une particularité majeure du DT1 en Afrique réside dans la fréquence élevée des \textbf{formes idiopathiques}, caractérisées par une perte de sécrétion d'insuline endogène sans signes d'auto-immunité détectables (absence d'auto-anticorps anti-îlots) \cite{Sobngwi2002}. Ces formes représentent 20 à 60\% des cas selon les études, contre moins de 5\% dans les populations européennes. Cette observation suggère des mécanismes physiopathologiques distincts, possiblement liés à des facteurs génétiques et environnementaux spécifiques aux populations africaines.
+
+\subsection{Le problème du \textit{dataset shift}}
+
+L'essor de l'intelligence artificielle et de l'apprentissage automatique (Machine Learning, ML) a révolutionné de nombreux domaines médicaux, incluant le diagnostic précoce de pathologies complexes. Cependant, un défi majeur émerge lorsque l'on tente d'appliquer ces modèles à des populations différentes de celles sur lesquelles ils ont été entraînés : le \textbf{\textit{dataset shift}} \cite{Quinonero-Candela2009}.
+
+Ce phénomène se manifeste particulièrement dans le contexte du DT1 : les modèles prédictifs développés sur des cohortes américaines ou européennes (majoritairement caucasiennes) montrent des performances dégradées lorsqu'appliqués aux populations africaines. Une étude récente a démontré qu'un score de risque génétique (GRS) entraîné sur des populations européennes présentait une sensibilité de seulement 53\% sur des populations camerounaises et ougandaises, contre 91\% sur des populations européennes \cite{Oram2025}. Cette différence s'explique par :
+
+\begin{itemize}
+    \item Des \textbf{distributions génétiques} différentes : les haplotypes HLA associés au DT1 varient significativement entre populations africaines et caucasiennes.
+    \item Des \textbf{facteurs environnementaux} distincts : nutrition, infections, microbiome intestinal.
+    \item Des \textbf{présentations cliniques} hétérogènes : formes idiopathiques vs. auto-immunes.
+\end{itemize}
+
+\subsection{Biomarqueurs génétiques prometteurs}
+
+Des travaux récents en bioinformatique ont identifié trois biomarqueurs génétiques candidats présentant un fort potentiel diagnostique pour le DT1 \cite{Zhang2022} :
+
+\begin{description}
+    \item[ANP32A-IT1 :] Long ARN non codant impliqué dans la régulation de la réponse immunitaire, notamment l'activation des lymphocytes T. Son expression est significativement augmentée chez les patients DT1 (AUC > 0.8).
+
+    \item[ESCO2 :] Gène codant pour une protéine impliquée dans la régulation du cycle cellulaire et la cohésion des chromatides s\oe urs. Des mutations de ce gène sont associées à des dysfonctions pancréatiques et à l'apoptose des cellules bêta.
+
+    \item[NBPF1 :] Membre de la famille des gènes NBPF (\textit{Neuroblastoma Breakpoint Family}), exprimé dans les cellules pancréatiques et impliqué dans la prolifération cellulaire. Son niveau d'expression corrèle avec le risque de développement du DT1.
+\end{description}
+
+Ces biomarqueurs ont été validés sur des cohortes asiatiques et européennes, mais leur pertinence dans le contexte africain reste à établir. L'adaptation de leur utilisation aux spécificités génétiques des populations camerounaises constitue une nécessité scientifique et clinique.
+
+\section{Objectifs de la recherche}
+
+\subsection{Objectif principal}
+
+L'objectif principal de ce mémoire est de \textbf{développer un système de détection précoce du Diabète de Type 1 adapté aux populations camerounaises}, en utilisant des techniques d'apprentissage automatique pour identifier et valider des biomarqueurs génétiques pertinents.
+
+\subsection{Objectifs spécifiques}
+
+Pour atteindre cet objectif principal, nous nous fixons les objectifs spécifiques suivants :
+
+\begin{enumerate}
+    \item \textbf{Constituer un dataset synthétique réaliste} de patients camerounais intégrant des données démographiques, cliniques et génétiques, en s'appuyant sur les distributions observées dans la littérature scientifique africaine.
+
+    \item \textbf{Comparer les performances de six algorithmes de classification supervisée} (Régression Logistique, Arbre de Décision, Random Forest, XGBoost, LightGBM, SVM) pour la prédiction du DT1, en optimisant leurs hyperparamètres par validation croisée.
+
+    \item \textbf{Identifier et valider biologiquement les biomarqueurs génétiques les plus pertinents} parmi ANP32A-IT1, ESCO2 et NBPF1, en utilisant des techniques d'interprétabilité (SHAP, LIME).
+
+    \item \textbf{Développer une application de démonstration interactive} permettant aux cliniciens d'utiliser le modèle pour des prédictions en temps réel, avec visualisation de l'importance des biomarqueurs.
+
+    \item \textbf{Évaluer les performances du système} en termes de recall (sensibilité), precision et AUC-ROC, avec une priorité clinique sur la minimisation des faux négatifs.
+\end{enumerate}
+
+\section{Hypothèses de recherche}
+
+Nos travaux reposent sur les hypothèses suivantes :
+
+\begin{itemize}
+    \item \textbf{H1 :} Les biomarqueurs ANP32A-IT1, ESCO2 et NBPF1 présentent une capacité discriminante significative (AUC > 0.70) pour la détection du DT1 dans le contexte camerounais.
+
+    \item \textbf{H2 :} Un modèle d'apprentissage automatique entraîné sur des données de populations africaines surpasse les approches basées sur des cohortes occidentales en termes de sensibilité et de spécificité.
+
+    \item \textbf{H3 :} Les algorithmes d'ensemble (Random Forest, XGBoost, LightGBM) offrent de meilleures performances que les modèles linéaires pour capturer les interactions complexes entre biomarqueurs.
+
+    \item \textbf{H4 :} L'interprétabilité des prédictions via SHAP permet de valider biologiquement l'importance des biomarqueurs identifiés, renforçant la confiance clinique dans le système.
+\end{itemize}
+
+\section{Contributions scientifiques}
+
+Ce travail apporte plusieurs contributions originales :
+
+\begin{itemize}
+    \item \textbf{Contribution méthodologique :} Développement d'un pipeline reproductible de détection précoce du DT1 adapté aux contraintes de ressources computationnelles limitées (pas de GPU, RAM modérée), typiques du contexte camerounais.
+
+    \item \textbf{Contribution scientifique :} Première étude combinant les biomarqueurs ANP32A-IT1, ESCO2 et NBPF1 dans le contexte spécifique des populations camerounaises, avec validation de leur pertinence par des méthodes d'interprétabilité avancées.
+
+    \item \textbf{Contribution pratique :} Création d'un outil de démonstration accessible (application web Streamlit) facilitant le transfert de connaissances entre recherche et pratique clinique, utilisable sans expertise technique approfondie.
+
+    \item \textbf{Contribution pédagogique :} Documentation exhaustive du projet (notebooks Jupyter commentés, guides d'installation, fiches conceptuelles) favorisant la reproductibilité et l'appropriation des méthodes par d'autres chercheurs africains.
+\end{itemize}
+
+\section{Organisation du mémoire}
+
+Ce mémoire s'organise en six chapitres :
+
+\begin{description}
+    \item[Chapitre 1 - Introduction :] Contextualisation de la problématique du DT1 en Afrique subsaharienne, présentation du \textit{dataset shift}, justification du choix des biomarqueurs et énoncé des objectifs.
+
+    \item[Chapitre 2 - État de l'art :] Revue de la littérature sur trois axes : (i) biologie du DT1 et spécificités africaines, (ii) intelligence artificielle en médecine et métriques d'évaluation, (iii) applications existantes du ML pour le DT1 et leurs limitations.
+
+    \item[Chapitre 3 - Méthodologie :] Description détaillée du dataset synthétique, des algorithmes de classification testés, des techniques d'optimisation des hyperparamètres, des métriques d'évaluation privilégiées, et des outils d'interprétabilité utilisés.
+
+    \item[Chapitre 4 - Résultats :] Présentation des performances des modèles, comparaisons statistiques, analyse de l'importance des biomarqueurs via SHAP, et démonstration de l'application Streamlit.
+
+    \item[Chapitre 5 - Discussion :] Interprétation des résultats au regard de la littérature, validation biologique des biomarqueurs identifiés, analyse des limitations de l'étude, et implications pour la santé publique camerounaise.
+
+    \item[Chapitre 6 - Conclusion :] Synthèse des contributions, réponse aux hypothèses de recherche, perspectives d'amélioration et travaux futurs.
+\end{description}
+
+\section{Délimitation du champ de l'étude}
+
+Il est important de préciser les limites de cette recherche :
+
+\begin{itemize}
+    \item \textbf{Population cible :} Ce travail se concentre sur les populations camerounaises. La généralisabilité à d'autres pays d'Afrique subsaharienne nécessite une validation externe.
+
+    \item \textbf{Nature des données :} Le dataset utilisé est synthétique, généré à partir de distributions réalistes extraites de la littérature. Une validation sur données réelles camerounaises constitue une étape ultérieure indispensable.
+
+    \item \textbf{Biomarqueurs :} Nous nous focalisons sur trois biomarqueurs candidats (ANP32A-IT1, ESCO2, NBPF1). D'autres marqueurs génétiques, épigénétiques ou cliniques pourraient enrichir le modèle.
+
+    \item \textbf{Portée clinique :} Ce système constitue un \textbf{outil d'aide à la décision}, non un remplacement du diagnostic médical. Toute prédiction positive doit être confirmée par des examens cliniques et biologiques complémentaires.
+
+    \item \textbf{Validation réglementaire :} L'application développée est une démonstration de recherche. Son déploiement en conditions réelles nécessiterait des validations cliniques, éthiques et réglementaires approfondies.
+\end{itemize}
+
+Ces délimitations assurent une interprétation rigoureuse des résultats et guident les travaux futurs nécessaires pour un impact clinique effectif.

@@ -1,0 +1,287 @@
+\documentclass[12pt,a4paper,oneside]{report}
+
+% ===================================================================
+% PACKAGES ESSENTIELS
+% ===================================================================
+
+% Encodage et langue
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+
+% Mise en page
+\usepackage[top=2.5cm, bottom=2.5cm, left=3cm, right=2.5cm]{geometry}
+\usepackage{setspace}  % Interligne
+\onehalfspacing  % Interligne 1.5
+
+% Math et symboles
+\usepackage{amsmath, amssymb, amsthm}
+
+% Graphiques et tableaux
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{booktabs}  % Tableaux professionnels
+\usepackage{multirow}
+\usepackage{array}
+
+% Couleurs et liens
+\usepackage[dvipsnames]{xcolor}
+\usepackage[hidelinks]{hyperref}  % Liens cliquables sans encadrement
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+}
+
+% Bibliographie
+\usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
+\addbibresource{bibliographie.bib}
+
+% Code source (si nécessaire)
+\usepackage{listings}
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!60!black},
+    stringstyle=\color{red}
+}
+
+% Algorithmes
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+% Glossaire et acronymes
+\usepackage[acronym]{glossaries}
+\makeglossaries
+
+% Chapitres et sections
+\usepackage{titlesec}
+
+% En-têtes et pieds de page
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\nouppercase{\leftmark}}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+
+% ===================================================================
+% INFORMATIONS DU DOCUMENT
+% ===================================================================
+
+\title{Détection précoce du Diabète de Type 1 en Afrique subsaharienne par apprentissage automatique : identification de biomarqueurs génétiques adaptés aux populations camerounaises}
+
+\author{Sorelle}
+
+\date{Novembre 2025}
+
+% ===================================================================
+% DÉBUT DU DOCUMENT
+% ===================================================================
+
+\begin{document}
+
+% Page de garde
+\input{sections/00_page_garde}
+
+% Page blanche
+\thispagestyle{empty}
+\clearpage
+\null
+\clearpage
+
+% Résumés
+\pagenumbering{roman}
+\setcounter{page}{1}
+
+% Résumé en français
+\chapter*{Résumé}
+\addcontentsline{toc}{chapter}{Résumé}
+
+Le Diabète de Type 1 (DT1) en Afrique subsaharienne présente des spécificités cliniques et génétiques distinctes des formes observées en Occident. Les formes idiopathiques, caractérisées par l'absence d'auto-anticorps, représentent 20 à 60\% des cas, rendant le diagnostic précoce particulièrement difficile. Cette problématique est aggravée par le \textit{dataset shift} : les modèles d'apprentissage automatique entraînés sur des populations caucasiennes montrent des performances dégradées lorsqu'appliqués aux populations africaines.
+
+\vspace{0.3cm}
+
+Ce mémoire de Master 2 vise à développer un système de détection précoce du DT1 spécifiquement adapté aux populations camerounaises, en utilisant des techniques d'apprentissage automatique pour identifier des biomarqueurs génétiques pertinents. Trois biomarqueurs candidats (ANP32A-IT1, ESCO2, NBPF1) ont été sélectionnés sur la base de la littérature scientifique récente montrant leur potentiel diagnostique (AUC > 0.8).
+
+\vspace{0.3cm}
+
+Notre méthodologie repose sur un dataset synthétique réaliste de 1000 patients camerounais, comprenant des données démographiques, cliniques et génétiques. Six algorithmes de classification supervisée ont été comparés (Régression Logistique, Arbre de Décision, Random Forest, XGBoost, LightGBM, SVM), avec optimisation des hyperparamètres par recherche en grille et validation croisée stratifiée. L'interprétabilité des prédictions a été assurée par l'utilisation de SHAP (\textit{SHapley Additive exPlanations}) et LIME (\textit{Local Interpretable Model-agnostic Explanations}).
+
+\vspace{0.3cm}
+
+Les résultats montrent que [À COMPLÉTER AVEC VOS RÉSULTATS]. Le modèle final atteint un recall de [XX\%] et une précision de [XX\%] sur l'ensemble de test, avec une AUC-ROC de [0.XX]. L'analyse SHAP confirme l'importance des biomarqueurs ESCO2 (importance relative : [XX\%]) et ANP32A-IT1 ([XX\%]) dans les prédictions, en cohérence avec les mécanismes physiopathologiques connus du DT1.
+
+\vspace{0.3cm}
+
+Une application de démonstration interactive a été développée avec Streamlit, permettant aux cliniciens d'uploader des données patients, d'obtenir des prédictions en temps réel, et de visualiser l'importance des biomarqueurs pour chaque diagnostic. Cette interface facilite le transfert de connaissance entre recherche et pratique clinique.
+
+\vspace{0.3cm}
+
+\textbf{Mots-clés :} Diabète de Type 1, Afrique subsaharienne, Cameroun, Apprentissage automatique, Biomarqueurs génétiques, SHAP, Santé publique
+
+\clearpage
+
+% Abstract en anglais
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+Type 1 Diabetes (T1D) in sub-Saharan Africa presents clinical and genetic specificities distinct from forms observed in Western populations. Idiopathic forms, characterized by the absence of autoantibodies, represent 20 to 60\% of cases, making early diagnosis particularly challenging. This issue is exacerbated by dataset shift: machine learning models trained on Caucasian populations show degraded performance when applied to African populations.
+
+\vspace{0.3cm}
+
+This Master's thesis aims to develop an early detection system for T1D specifically adapted to Cameroonian populations, using machine learning techniques to identify relevant genetic biomarkers. Three candidate biomarkers (ANP32A-IT1, ESCO2, NBPF1) were selected based on recent scientific literature showing their diagnostic potential (AUC > 0.8).
+
+\vspace{0.3cm}
+
+Our methodology relies on a realistic synthetic dataset of 1000 Cameroonian patients, including demographic, clinical, and genetic data. Six supervised classification algorithms were compared (Logistic Regression, Decision Tree, Random Forest, XGBoost, LightGBM, SVM), with hyperparameter optimization through grid search and stratified cross-validation. Prediction interpretability was ensured using SHAP (SHapley Additive exPlanations) and LIME (Local Interpretable Model-agnostic Explanations).
+
+\vspace{0.3cm}
+
+Results show that [TO BE COMPLETED WITH YOUR RESULTS]. The final model achieves a recall of [XX\%] and precision of [XX\%] on the test set, with an AUC-ROC of [0.XX]. SHAP analysis confirms the importance of biomarkers ESCO2 (relative importance: [XX\%]) and ANP32A-IT1 ([XX\%]) in predictions, consistent with known T1D pathophysiological mechanisms.
+
+\vspace{0.3cm}
+
+An interactive demonstration application was developed with Streamlit, allowing clinicians to upload patient data, obtain real-time predictions, and visualize biomarker importance for each diagnosis. This interface facilitates knowledge transfer between research and clinical practice.
+
+\vspace{0.3cm}
+
+\textbf{Keywords:} Type 1 Diabetes, Sub-Saharan Africa, Cameroon, Machine Learning, Genetic Biomarkers, SHAP, Public Health
+
+\clearpage
+
+% Remerciements
+\chapter*{Remerciements}
+\addcontentsline{toc}{chapter}{Remerciements}
+
+Je tiens à exprimer ma profonde gratitude à toutes les personnes qui ont contribué, de près ou de loin, à la réalisation de ce mémoire de Master 2.
+
+\vspace{0.3cm}
+
+En premier lieu, je remercie chaleureusement mon encadrant, le \textbf{Dr. TCHAPET NJAFA Jean-Pierre}, pour son accompagnement rigoureux, sa disponibilité constante et ses conseils avisés tout au long de ces quatorze semaines de travail. Sa expertise en biophysique et en intelligence artificielle médicale a été déterminante dans l'orientation et la qualité de ce projet.
+
+\vspace{0.3cm}
+
+Mes remerciements vont également au \textbf{Professeur NANA Engo} pour ses remarques constructives et ses orientations lors de l'affinement du sujet de recherche. Ses connaissances approfondies sur le contexte de la santé publique au Cameroun ont enrichi considérablement la pertinence de cette étude.
+
+\vspace{0.3cm}
+
+Je remercie [À COMPLÉTER : membres du jury, enseignants du Master, laboratoire d'accueil, etc.].
+
+\vspace{0.3cm}
+
+Sur le plan scientifique, je souhaite saluer les travaux pionniers des Professeurs Jean-Claude Mbanya, Eugene Sobngwi et Andre Pascal Kengne, dont les publications sur le diabète en Afrique subsaharienne ont constitué les fondations théoriques de cette recherche.
+
+\vspace{0.3cm}
+
+Je remercie également [À COMPLÉTER : collègues de promotion, famille, proches] pour leur soutien moral et leurs encouragements durant cette période intensive de travail.
+
+\vspace{0.3cm}
+
+Enfin, je dédie ce travail aux millions de personnes atteintes de diabète en Afrique subsaharienne, avec l'espoir que la recherche scientifique contribue à améliorer leur accès au diagnostic précoce et aux soins de qualité.
+
+\clearpage
+
+% Table des matières
+\tableofcontents
+\clearpage
+
+% Liste des figures
+\listoffigures
+\addcontentsline{toc}{chapter}{Liste des figures}
+\clearpage
+
+% Liste des tableaux
+\listoftables
+\addcontentsline{toc}{chapter}{Liste des tableaux}
+\clearpage
+
+% Liste des acronymes (à compléter)
+\chapter*{Liste des acronymes}
+\addcontentsline{toc}{chapter}{Liste des acronymes}
+
+\begin{description}
+    \item[AUC] Area Under the Curve (Aire sous la courbe)
+    \item[CNN] Convolutional Neural Network (Réseau de neurones convolutif)
+    \item[CSV] Comma-Separated Values (Valeurs séparées par des virgules)
+    \item[DT1] Diabète de Type 1
+    \item[DT2] Diabète de Type 2
+    \item[EDA] Exploratory Data Analysis (Analyse exploratoire des données)
+    \item[FN] False Negative (Faux Négatif)
+    \item[FP] False Positive (Faux Positif)
+    \item[HbA1c] Hémoglobine glyquée
+    \item[HLA] Human Leukocyte Antigen (Antigène des leucocytes humains)
+    \item[IA] Intelligence Artificielle
+    \item[IMC] Indice de Masse Corporelle
+    \item[K-NN] K-Nearest Neighbors (K plus proches voisins)
+    \item[LIME] Local Interpretable Model-agnostic Explanations
+    \item[ML] Machine Learning (Apprentissage automatique)
+    \item[OMS] Organisation Mondiale de la Santé
+    \item[PDF] Probability Density Function (Fonction de densité de probabilité)
+    \item[RAM] Random Access Memory (Mémoire vive)
+    \item[RF] Random Forest (Forêt aléatoire)
+    \item[ROC] Receiver Operating Characteristic
+    \item[SHAP] SHapley Additive exPlanations
+    \item[SMOTE] Synthetic Minority Over-sampling Technique
+    \item[SVM] Support Vector Machine (Machine à vecteurs de support)
+    \item[TN] True Negative (Vrai Négatif)
+    \item[TP] True Positive (Vrai Positif)
+    \item[XGBoost] Extreme Gradient Boosting
+\end{description}
+
+\clearpage
+
+% Corps du mémoire
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% Chapitre 1 : Introduction
+\input{sections/01_introduction}
+
+% Chapitre 2 : État de l'art
+\input{sections/02_etat_art}
+
+% Chapitre 3 : Méthodologie
+\input{sections/03_methodologie}
+
+% Chapitre 4 : Résultats
+\input{sections/04_resultats}
+
+% Chapitre 5 : Discussion
+\input{sections/05_discussion}
+
+% Chapitre 6 : Conclusion
+\input{sections/06_conclusion}
+
+% Bibliographie
+\printbibliography[heading=bibintoc, title={Bibliographie}]
+
+% Annexes (optionnelles)
+\appendix
+\chapter{Code source principal}
+\label{ann:code}
+
+Le code source complet du projet est disponible dans l'arborescence du projet, avec les fichiers principaux suivants :
+
+\begin{itemize}
+    \item \texttt{2\_DONNEES/generate\_synthetic\_data.py} : Génération des données synthétiques
+    \item \texttt{2\_DONNEES/scripts\_preprocessing/01\_nettoyage.py} : Nettoyage des données
+    \item \texttt{4\_SCRIPTS\_PRODUCTION/pipeline\_complet.py} : Pipeline ML complet
+    \item \texttt{5\_APPLICATION\_DEMO/app\_streamlit.py} : Application de démonstration
+\end{itemize}
+
+Les notebooks pédagogiques Jupyter sont disponibles dans le dossier \texttt{3\_NOTEBOOKS\_PEDAGOGIQUES/}.
+
+\chapter{Résultats supplémentaires}
+\label{ann:resultats}
+
+[À compléter avec tableaux et figures supplémentaires non inclus dans le corps du mémoire]
+
+\end{document}

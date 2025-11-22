@@ -1,0 +1,31 @@
+\chapter{Méthodologie}
+\label{chap:methodologie}
+
+\section{Acquisition et préparation des données}
+
+\subsection{Dataset synthétique}
+1000 patients camerounais, 12 variables (démographie + biomarqueurs + diagnostic).
+Distributions réalistes basées sur littérature \cite{Mbanya2010,Katte2023}.
+
+\subsection{Nettoyage}
+Gestion valeurs manquantes (2-5\%), détection outliers, standardisation.
+
+\section{Algorithmes de classification}
+
+Six algorithmes testés : Logistic Regression, Decision Tree, Random Forest, XGBoost, LightGBM, SVM.
+Configuration hardware : Intel i7 11e gen, 32GB RAM, pas de GPU.
+
+\section{Optimisation des hyperparamètres}
+
+Grid Search et Random Search avec validation croisée stratifiée (K=5).
+Exemples : n\_estimators, max\_depth, learning\_rate.
+
+\section{Métriques d'évaluation}
+
+Priorité : **Recall** (minimiser faux négatifs cliniquement graves).
+Autres : Precision, F1-Score, AUC-ROC.
+
+\section{Interprétabilité}
+
+SHAP values pour importance globale et prédictions individuelles.
+LIME pour validation croisée des explications.
