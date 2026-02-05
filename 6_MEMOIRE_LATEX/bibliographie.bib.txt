@@ -1,0 +1,239 @@
+% ========================================================================
+% BIBLIOGRAPHIE - Projet DT1 Cameroun
+% Références clés sur le DT1 en Afrique, ML médical, et biomarqueurs
+% ========================================================================
+
+% === DIABÈTE TYPE 1 EN AFRIQUE ===
+
+@article{Katte2023,
+  author = {Katte, Jean-Claude and McDonald, Timothy J and Sobngwi, Eugene and Jones, Andrew G},
+  title = {The phenotype of type 1 diabetes in sub-Saharan Africa},
+  journal = {Frontiers in Public Health},
+  year = {2023},
+  volume = {11},
+  pages = {1014626},
+  doi = {10.3389/fpubh.2023.1014626}
+}
+
+@article{Mbanya2010,
+  author = {Mbanya, Jean Claude and Motala, Ayesha A and Sobngwi, Eugene and Assah, Felix K and Enoru, Susan T},
+  title = {Diabetes in sub-Saharan Africa},
+  journal = {The Lancet},
+  year = {2010},
+  volume = {375},
+  number = {9733},
+  pages = {2254--2266},
+  doi = {10.1016/S0140-6736(10)60550-8}
+}
+
+@article{Atun2017,
+  author = {Atun, Rifat and Davies, Justine I and Gale, Ewan AM and B{\"a}rnighausen, Till and Beran, David and Kengne, Andre Pascal},
+  title = {Diabetes in sub-Saharan Africa: from clinical care to health policy},
+  journal = {The Lancet Diabetes \& Endocrinology},
+  year = {2017},
+  volume = {5},
+  number = {8},
+  pages = {622--667},
+  doi = {10.1016/S2213-8587(17)30181-X}
+}
+
+@article{Sobngwi2002,
+  author = {Sobngwi, Eugene and Mauvais-Jarvis, Franck and Vexiau, Patrick and Mbanya, Jean Claude and Gautier, Jean-Fran{\c{c}}ois},
+  title = {Diabetes in Africans. Part 2: Ketosis-prone atypical diabetes mellitus},
+  journal = {Diabetes \& Metabolism},
+  year = {2002},
+  volume = {28},
+  number = {1},
+  pages = {5--12}
+}
+
+@article{Oram2025,
+  author = {Oram, Richard A and others},
+  title = {The impact of ancestry on performance of type 1 diabetes genetic risk scores},
+  journal = {medRxiv preprint},
+  year = {2025},
+  doi = {10.1101/2025.07.17.25330632}
+}
+
+% === BIOMARQUEURS GÉNÉTIQUES ===
+
+@article{Zhang2022,
+  author = {Zhang, Y and others},
+  title = {Identification of candidate biomarkers and pathways associated with type 1 diabetes mellitus using bioinformatics analysis},
+  journal = {Scientific Reports},
+  year = {2022},
+  volume = {12},
+  pages = {13291},
+  doi = {10.1038/s41598-022-13291-1},
+  note = {Étude bioinformatique générale sur les biomarqueurs DT1}
+}
+
+@article{EndocrineJournal2023,
+  title = {Characteristic gene prognostic model of type 1 diabetes mellitus via machine learning strategy},
+  journal = {Endocrine Journal},
+  volume = {70},
+  number = {3},
+  pages = {285--296},
+  year = {2023},
+  doi = {10.1507/endocrj.EJ22-0178},
+  url = {https://www.jstage.jst.go.jp/article/endocrj/70/3/70_EJ22-0178/_article},
+  note = {SOURCE PRINCIPALE: Biomarqueurs ANP32A-IT1, ESCO2, NBPF1 avec AUC > 0.8 pour diagnostic DT1}
+}
+
+% === MACHINE LEARNING EN MÉDECINE ===
+
+@article{Esteva2019,
+  author = {Esteva, Andre and others},
+  title = {A guide to deep learning in healthcare},
+  journal = {Nature Medicine},
+  year = {2019},
+  volume = {25},
+  pages = {24--29},
+  doi = {10.1038/s41591-018-0316-z}
+}
+
+@article{Rajkomar2019,
+  author = {Rajkomar, Alvin and Dean, Jeffrey and Kohane, Isaac},
+  title = {Machine learning in medicine},
+  journal = {New England Journal of Medicine},
+  year = {2019},
+  volume = {380},
+  pages = {1347--1358}
+}
+
+@inproceedings{Lundberg2017,
+  author = {Lundberg, Scott M and Lee, Su-In},
+  title = {A unified approach to interpreting model predictions},
+  booktitle = {Advances in Neural Information Processing Systems},
+  year = {2017},
+  pages = {4765--4774}
+}
+
+@article{Ribeiro2016,
+  author = {Ribeiro, Marco Tulio and Singh, Sameer and Guestrin, Carlos},
+  title = {Why should I trust you?: Explaining the predictions of any classifier},
+  journal = {Proceedings of the 22nd ACM SIGKDD},
+  year = {2016},
+  pages = {1135--1144}
+}
+
+% === APPRENTISSAGE AUTOMATIQUE - LIVRES ===
+
+@book{Bishop2006,
+  author = {Bishop, Christopher M},
+  title = {Pattern recognition and machine learning},
+  publisher = {Springer},
+  year = {2006}
+}
+
+@book{Hastie2009,
+  author = {Hastie, Trevor and Tibshirani, Robert and Friedman, Jerome},
+  title = {The elements of statistical learning: data mining, inference, and prediction},
+  publisher = {Springer},
+  edition = {2},
+  year = {2009}
+}
+
+% === ALGORITHMES SPÉCIFIQUES ===
+
+@article{Breiman2001,
+  author = {Breiman, Leo},
+  title = {Random forests},
+  journal = {Machine Learning},
+  year = {2001},
+  volume = {45},
+  number = {1},
+  pages = {5--32}
+}
+
+@inproceedings{Chen2016,
+  author = {Chen, Tianqi and Guestrin, Carlos},
+  title = {XGBoost: A scalable tree boosting system},
+  booktitle = {Proceedings of the 22nd ACM SIGKDD},
+  year = {2016},
+  pages = {785--794}
+}
+
+@inproceedings{Ke2017,
+  author = {Ke, Guolin and others},
+  title = {LightGBM: A highly efficient gradient boosting decision tree},
+  booktitle = {Advances in Neural Information Processing Systems},
+  year = {2017},
+  pages = {3146--3154}
+}
+
+% === CLASSES DÉSÉQUILIBRÉES ===
+
+@article{Chawla2002,
+  author = {Chawla, Nitesh V and Bowyer, Kevin W and Hall, Lawrence O and Kegelmeyer, W Philip},
+  title = {SMOTE: Synthetic minority over-sampling technique},
+  journal = {Journal of Artificial Intelligence Research},
+  year = {2002},
+  volume = {16},
+  pages = {321--357}
+}
+
+% === DATASET SHIFT ===
+
+@book{Quinonero-Candela2009,
+  author = {Qui{\~n}onero-Candela, Joaquin and Sugiyama, Masashi and Schwaighofer, Anton and Lawrence, Neil D},
+  title = {Dataset shift in machine learning},
+  publisher = {MIT Press},
+  year = {2009}
+}
+
+% === SANTÉ PUBLIQUE AFRIQUE ===
+
+@report{DiabetesAtlas2021,
+  author = {{International Diabetes Federation}},
+  title = {IDF Diabetes Atlas},
+  edition = {10th edition},
+  year = {2021},
+  url = {https://diabetesatlas.org/}
+}
+
+@article{Kengne2013,
+  author = {Kengne, Andre Pascal and others},
+  title = {New insights on diabetes mellitus and obesity in Africa-Part 1: Prevalence, pathogenesis and comorbidities},
+  journal = {Heart},
+  year = {2013},
+  volume = {99},
+  pages = {979--983}
+}
+
+% === APPLICATIONS ML DIABÈTE ===
+
+@article{Contreras2018,
+  author = {Contreras, Ivan and Vehi, Josep},
+  title = {Artificial intelligence for diabetes management and decision support: literature review},
+  journal = {Journal of Medical Internet Research},
+  year = {2018},
+  volume = {20},
+  number = {5},
+  pages = {e10775}
+}
+
+% === REPRODUCTIBILITÉ ===
+
+@article{Wilkinson2016,
+  author = {Wilkinson, Mark D and others},
+  title = {The FAIR Guiding Principles for scientific data management and stewardship},
+  journal = {Scientific Data},
+  year = {2016},
+  volume = {3},
+  pages = {160018}
+}
+
+% === ÉTHIQUE IA MÉDICALE ===
+
+@article{Char2018,
+  author = {Char, Danton S and Shah, Nigam H and Magnus, David},
+  title = {Implementing machine learning in health care—addressing ethical challenges},
+  journal = {New England Journal of Medicine},
+  year = {2018},
+  volume = {378},
+  pages = {981--983}
+}
+
+% AJOUTER D'AUTRES RÉFÉRENCES AU FUR ET À MESURE
+% (objectif : 80-100 références pour un mémoire Master 2)

@@ -1,269 +1,245 @@
-"""
-APPLICATION STREAMLIT - Détection Précoce DT1 Cameroun
-Interface interactive pour prédiction en temps réel
-"""
-
 import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib
 import plotly.express as px
 import plotly.graph_objects as go
-from sklearn.ensemble import RandomForestClassifier
-import warnings
-warnings.filterwarnings('ignore')
+from fpdf import FPDF
+import base64
+import os
 
-# === CONFIGURATION PAGE ===
+# Configuration de la page
 st.set_page_config(
-    page_title="DT1 Detector Cameroun",
-    page_icon="🏥",
+    page_title="Dépistage Précoce DT1 - Cameroun",
+    page_icon="🇨🇲",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# === STYLES CSS ===
-st.markdown("""
-<style>
-    .main-header {
-        font-size: 2.5rem;
-        color: #1E88E5;
-        text-align: center;
-        margin-bottom: 1rem;
-    }
-    .sub-header {
-        font-size: 1.2rem;
-        color: #424242;
-        text-align: center;
-        margin-bottom: 2rem;
-    }
-</style>
-""", unsafe_allow_html=True)
+# Chemins (relatifs à la racine du projet ou ajustables)
+MODEL_PATH = '../4_MODELES/models/final_model.pkl'
+FEATURES_PATH = '../4_MODELES/models/features.pkl'
 
-# === HEADER ===
-st.markdown('<h1 class="main-header">🏥 Détection Précoce du Diabète Type 1</h1>', unsafe_allow_html=True)
-st.markdown('<p class="sub-header">Système adapté aux populations camerounaises</p>', unsafe_allow_html=True)
+# --- FONCTIONS UTILITAIRES ---
 
-# === SIDEBAR ===
-st.sidebar.title("Navigation")
-page = st.sidebar.radio("Choisir une page:", ["🏠 Accueil", "🔍 Prédiction", "📊 À propos"])
+def load_css():
+    st.markdown("""
+    <style>
+        .main {
+            background-color: #f8f9fa;
+        }
+        .stButton>button {
+            width: 100%;
+        }
+        .metric-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+    </style>
+    """, unsafe_allow_html=True)
 
-# === PAGE ACCUEIL ===
-if page == "🏠 Accueil":
-    st.header("Bienvenue dans l'outil de détection DT1")
+@st.cache_resource
+def load_model():
+    """Charge le modèle et la liste des features"""
+    try:
+        model = joblib.load(MODEL_PATH)
+        # Tenter de charger les features sauvegardées, sinon utiliser la liste par défaut
+        try:
+            features = joblib.load(FEATURES_PATH)
+        except:
+            features = ['age', 'IMC', 'glycemie_jeun', 'HbA1c', 'ANP32A_IT1', 'ESCO2', 'NBPF1']
+        return model, features
+    except FileNotFoundError:
+        return None, None
 
-    col1, col2 = st.columns(2)
+def predict_patient(model, features, data):
+    """Effectue une prédiction pour un patient"""
+    # S'assurer que les données sont dans le bon ordre des features
+    if isinstance(data, dict):
+        df = pd.DataFrame([data])
+    else:
+        df = data
+    
+    # Vérifier et ordonner les colonnes
+    df = df[features]
+    
+    # Prédiction (0=Sain, 1=DT1)
+    prediction = model.predict(df)[0]
+    probability = model.predict_proba(df)[0][1]
+    
+    return prediction, probability
 
-    with col1:
-        st.subheader("🎯 Objectif")
-        st.write("""
-        Cette application utilise l'apprentissage automatique pour détecter
-        précocement le Diabète de Type 1 chez les patients camerounais,
-        en analysant des biomarqueurs génétiques spécifiques.
-        """)
+def generate_pdf(results):
+    """Génère un rapport PDF simple"""
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", 'B', 16)
+    pdf.cell(0, 10, "Rapport de Dépistage - Diabète Type 1", 0, 1, 'C')
+    pdf.ln(10)
+    
+    pdf.set_font("Arial", '', 12)
+    pdf.cell(0, 10, f"Date: {pd.Timestamp.now().strftime('%d/%m/%Y %H:%M')}", 0, 1)
+    pdf.ln(5)
+    
+    pdf.set_font("Arial", 'B', 12)
+    pdf.cell(0, 10, "Informations Patient:", 0, 1)
+    pdf.set_font("Arial", '', 12)
+    for key, value in results['data'].items():
+        pdf.cell(0, 8, f"{key}: {value}", 0, 1)
+    pdf.ln(5)
+    
+    pdf.set_font("Arial", 'B', 14)
+    status = "Risque ÉLEVÉ (Positif)" if results['prediction'] == 1 else "Risque FAIBLE (Négatif)"
+    color = (255, 0, 0) if results['prediction'] == 1 else (0, 128, 0)
+    pdf.set_text_color(*color)
+    pdf.cell(0, 10, f"Résultat: {status}", 0, 1)
+    pdf.set_text_color(0, 0, 0)
+    
+    pdf.cell(0, 10, f"Probabilité estimée: {results['probability']*100:.1f}%", 0, 1)
+    
+    return pdf.output(dest='S').encode('latin-1')
 
-        st.subheader("🧬 Biomarqueurs analysés")
+# --- INTERFACE PRINCIPALE ---
+
+def main():
+    load_css()
+    
+    # Sidebar
+    st.sidebar.image("https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Flag_of_Cameroon.svg/1200px-Flag_of_Cameroon.svg.png", width=100)
+    st.sidebar.title("Navigation")
+    page = st.sidebar.radio("Aller vers", ["Accueil", "Prédictions", "Base de Données", "À propos"])
+    
+    st.sidebar.markdown("---")
+    st.sidebar.info("Projet Master 2 - Sorelle Perelle Nguisakam \nUniversité de Yaoundé I")
+
+    model, model_features = load_model()
+
+    if page == "Accueil":
+        st.title("Dépistage Précoce du Diabète de Type 1 🏥")
+        st.subheader("Contexte Africain & Camerounais")
+        
         st.markdown("""
-        - **ANP32A-IT1** : Régulation immunitaire
-        - **ESCO2** : Cycle cellulaire
-        - **NBPF1** : Expression pancréatique
+        Cette application démontre l'utilisation de l'Intelligence Artificielle pour le diagnostic précoce du DT1.
+        
+        **Objectifs :**
+        *   Identifier les patients à risque avant l'apparition des symptômes graves.
+        *   Utiliser des biomarqueurs génétiques spécifiques (ESCO2, ANP32A-IT1) et cliniques.
+        *   Fournir un outil d'aide à la décision pour les cliniciens.
         """)
-
-    with col2:
-        st.subheader("📌 Contexte")
-        st.write("""
-        Le DT1 en Afrique subsaharienne présente des spécificités :
-        - Formes idiopathiques (sans auto-anticorps)
-        - Diagnostic souvent tardif
-        - Mortalité infantile élevée
-
-        Ce système vise à améliorer le diagnostic précoce.
-        """)
-
-        st.subheader("⚠️ Important")
-        st.warning("""
-        Cet outil est une **aide à la décision**, pas un diagnostic médical.
-        Toute prédiction positive doit être confirmée cliniquement.
-        """)
-
-    st.markdown("---")
-    st.info("👈 Utilisez le menu de gauche pour naviguer vers **Prédiction**")
-
-# === PAGE PRÉDICTION ===
-elif page == "🔍 Prédiction":
-    st.header("Analyse et Prédiction DT1")
-
-    # Mode de saisie
-    mode = st.radio("Mode de saisie:", ["📝 Saisie manuelle (1 patient)", "📄 Upload CSV (plusieurs patients)"])
-
-    if mode == "📝 Saisie manuelle (1 patient)":
-        st.subheader("Entrez les informations du patient")
-
-        col1, col2, col3 = st.columns(3)
-
+        
+        col1, col2 = st.columns(2)
         with col1:
-            age = st.number_input("Âge (années)", min_value=5, max_value=70, value=25)
-            sexe = st.selectbox("Sexe", ["M", "F"])
-            region = st.selectbox("Région", ["Yaoundé", "Douala", "Bafoussam", "Garoua", "Bamenda", "Maroua", "Ngaoundéré"])
+            st.image("https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", caption="Recherche Médicale")
+        with col2:
+            st.info("""
+            **Le saviez-vous ?**
+            En Afrique subsaharienne, le diagnostic du DT1 est souvent tardif, entraînant des complications sévères.
+            Ce modèle IA vise à changer la donne en intégrant la génétique locale.
+            """)
+
+    elif page == "Prédictions":
+        if model is None:
+            st.error("⚠️ Modèle non trouvé ! Veuillez exécuter le script d'entraînement `4_SCRIPTS_PRODUCTION/train_model_week6.py` d'abord.")
+            return
+
+        st.title("Module de Prédiction 🧬")
+        st.markdown("Remplissez les informations cliniques et génétiques du patient.")
+        
+        col1, col2 = st.columns([1, 2])
+        
+        with col1:
+            st.subheader("Données Patient")
+            form = st.form("patient_form")
+            age = form.number_input("Âge (années)", min_value=0, max_value=120, value=25)
+            imc = form.number_input("IMC (kg/m²)", min_value=10.0, max_value=50.0, value=22.0)
+            glycemie = form.number_input("Glycémie à jeun (mg/dL)", min_value=50, max_value=400, value=90)
+            hba1c = form.number_input("HbA1c (%)", min_value=4.0, max_value=15.0, value=5.5)
+            
+            st.markdown("**Biomarqueurs Génétiques (Expression Relative)**")
+            anp32 = form.number_input("ANP32A_IT1", value=1.0)
+            esco2 = form.number_input("ESCO2", value=1.0)
+            nbpf1 = form.number_input("NBPF1", value=1.0)
+            
+            submit = form.form_submit_button("Lancer l'analyse IA 🚀")
 
         with col2:
-            imc = st.number_input("IMC (kg/m²)", min_value=15.0, max_value=40.0, value=22.0, step=0.1)
-            glycemie = st.number_input("Glycémie à jeun (mmol/L)", min_value=3.0, max_value=20.0, value=5.5, step=0.1)
-            hba1c = st.number_input("HbA1c (%)", min_value=4.0, max_value=14.0, value=5.5, step=0.1)
+            if submit:
+                # Préparer les données
+                input_data = {
+                    'age': age,
+                    'IMC': imc,
+                    'glycemie_jeun': glycemie,
+                    'HbA1c': hba1c,
+                    'ANP32A_IT1': anp32,
+                    'ESCO2': esco2,
+                    'NBPF1': nbpf1
+                }
+                
+                # Prédiction
+                pred, proba = predict_patient(model, model_features, input_data)
+                
+                # Affichage Résultats
+                st.subheader("Résultats de l'Analyse")
+                
+                res_col1, res_col2 = st.columns(2)
+                
+                with res_col1:
+                    if pred == 1:
+                        st.error(f"### Risque ÉLEVÉ (Positif)")
+                        st.markdown(f"**Probabilité de DT1 :** {proba*100:.1f}%")
+                    else:
+                        st.success(f"### Risque FAIBLE (Négatif)")
+                        st.markdown(f"**Probabilité de DT1 :** {proba*100:.1f}%")
+                
+                with res_col2:
+                    # Jauge de risque (Gauge Chart)
+                    fig = go.Figure(go.Indicator(
+                        mode = "gauge+number",
+                        value = proba * 100,
+                        domain = {'x': [0, 1], 'y': [0, 1]},
+                        title = {'text': "Niveau de Risque (%)"},
+                        gauge = {
+                            'axis': {'range': [0, 100]},
+                            'bar': {'color': "darkred" if pred==1 else "green"},
+                            'steps': [
+                                {'range': [0, 50], 'color': "lightgreen"},
+                                {'range': [50, 100], 'color': "salmon"}],
+                            'threshold': {
+                                'line': {'color': "black", 'width': 4},
+                                'thickness': 0.75,
+                                'value': 50}}))
+                    st.plotly_chart(fig, use_container_width=True)
 
-        with col3:
-            anp32a = st.number_input("ANP32A-IT1 (U/mL)", min_value=0.5, max_value=10.0, value=2.0, step=0.1)
-            esco2 = st.number_input("ESCO2 (U/mL)", min_value=1.0, max_value=15.0, value=3.0, step=0.1)
-            nbpf1 = st.number_input("NBPF1 (U/mL)", min_value=0.8, max_value=8.0, value=2.0, step=0.1)
+                st.markdown("---")
+                st.subheader("Interprétabilité (Pourquoi cette décision ?)")
+                st.info("Ici s'afficherait le graphique SHAP Force Plot pour expliquer la contribution de chaque variable (Simulation pour la démo).")
+                
+                # Simulation simple de l'impact
+                contributions = {
+                    'Glycémie': (glycemie - 100) / 100,
+                    'HbA1c': (hba1c - 5.7) / 2,
+                    'ESCO2': (esco2 - 1.0) * 0.5
+                }
+                feature_imp = pd.DataFrame.from_dict(contributions, orient='index', columns=['Impact Relatif'])
+                st.bar_chart(feature_imp)
 
-        antecedents = st.checkbox("Antécédents familiaux de diabète")
+                # Export PDF
+                st.markdown("### Rapports")
+                results_data = {'data': input_data, 'prediction': int(pred), 'probability': proba}
+                pdf_bytes = generate_pdf(results_data)
+                b64 = base64.b64encode(pdf_bytes).decode('latin-1')
+                href = f'<a href="data:application/octet-stream;base64,{b64}" download="rapport_patient.pdf" class="stButton">📥 Télécharger le Rapport PDF</a>'
+                st.markdown(href, unsafe_allow_html=True)
+    
+    elif page == "À propos":
+        st.title("À propos")
+        st.write("Application développée dans le cadre du Mémoire de Master 2 Biophysique.")
+        st.write("Contact: Sorelle Perelle Nguisakam")
 
-        if st.button("🔮 Analyser", type="primary"):
-            # Créer DataFrame
-            data = {
-                'age': [age],
-                'sexe': [1 if sexe == 'F' else 0],
-                'IMC': [imc],
-                'glycemie_jeun': [glycemie],
-                'HbA1c': [hba1c],
-                'antecedents_familiaux': [1 if antecedents else 0],
-                'ANP32A_IT1': [anp32a],
-                'ESCO2': [esco2],
-                'NBPF1': [nbpf1],
-            }
-
-            df_patient = pd.DataFrame(data)
-
-            # Simulation prédiction (en attendant modèle entraîné)
-            # Logique simple basée sur biomarqueurs
-            risk_score = (esco2 * 0.4 + anp32a * 0.35 + nbpf1 * 0.25) / 10
-            proba_dt1 = min(max(risk_score, 0.1), 0.95)  # Entre 10% et 95%
-
-            st.markdown("---")
-            st.subheader("📊 Résultats de l'analyse")
-
-            col_res1, col_res2 = st.columns(2)
-
-            with col_res1:
-                if proba_dt1 > 0.5:
-                    st.error(f"⚠️ **Risque élevé de DT1** ({proba_dt1*100:.1f}%)")
-                    st.write("Recommandation : Examens complémentaires urgents")
-                else:
-                    st.success(f"✅ **Risque faible de DT1** ({proba_dt1*100:.1f}%)")
-                    st.write("Recommandation : Surveillance standard")
-
-                # Gauge chart
-                fig_gauge = go.Figure(go.Indicator(
-                    mode = "gauge+number",
-                    value = proba_dt1 * 100,
-                    title = {'text': "Probabilité DT1"},
-                    gauge = {
-                        'axis': {'range': [None, 100]},
-                        'bar': {'color': "darkred" if proba_dt1 > 0.5 else "green"},
-                        'steps': [
-                            {'range': [0, 30], 'color': "lightgreen"},
-                            {'range': [30, 70], 'color': "yellow"},
-                            {'range': [70, 100], 'color': "lightcoral"}
-                        ],
-                        'threshold': {
-                            'line': {'color': "red", 'width': 4},
-                            'thickness': 0.75,
-                            'value': 50
-                        }
-                    }
-                ))
-                fig_gauge.update_layout(height=300)
-                st.plotly_chart(fig_gauge, use_container_width=True)
-
-            with col_res2:
-                st.write("**Importance des biomarqueurs:**")
-
-                importance = pd.DataFrame({
-                    'Biomarqueur': ['ESCO2', 'ANP32A-IT1', 'NBPF1'],
-                    'Importance': [40, 35, 25]
-                })
-
-                fig_imp = px.bar(importance, x='Importance', y='Biomarqueur',
-                                 orientation='h', color='Importance',
-                                 color_continuous_scale='Reds')
-                fig_imp.update_layout(height=300, showlegend=False)
-                st.plotly_chart(fig_imp, use_container_width=True)
-
-    else:  # Mode CSV
-        st.subheader("Upload fichier CSV")
-
-        st.write("Format attendu : colonnes `age`, `sexe`, `ANP32A_IT1`, `ESCO2`, `NBPF1`, etc.")
-
-        uploaded_file = st.file_uploader("Choisir un fichier CSV", type=['csv'])
-
-        if uploaded_file is not None:
-            df_upload = pd.read_csv(uploaded_file)
-            st.success(f"✅ Fichier chargé : {len(df_upload)} patients")
-
-            st.dataframe(df_upload.head())
-
-            if st.button("🔮 Analyser tous les patients"):
-                st.info("Analyse en cours... (simulation)")
-
-                # Simulation
-                df_upload['Probabilite_DT1'] = np.random.uniform(0.1, 0.9, len(df_upload))
-                df_upload['Diagnostic_predit'] = df_upload['Probabilite_DT1'].apply(
-                    lambda x: 'DT1+' if x > 0.5 else 'DT1-'
-                )
-
-                st.subheader("📈 Résultats")
-                st.dataframe(df_upload[['ID_patient', 'Probabilite_DT1', 'Diagnostic_predit']])
-
-                # Distribution
-                fig_dist = px.histogram(df_upload, x='Probabilite_DT1', nbins=20,
-                                        title="Distribution des probabilités DT1")
-                st.plotly_chart(fig_dist, use_container_width=True)
-
-                # Téléchargement
-                csv = df_upload.to_csv(index=False).encode('utf-8')
-                st.download_button(
-                    label="📥 Télécharger résultats (CSV)",
-                    data=csv,
-                    file_name='resultats_dt1.csv',
-                    mime='text/csv',
-                )
-
-# === PAGE À PROPOS ===
-else:
-    st.header("À propos du projet")
-
-    st.subheader("🎓 Contexte académique")
-    st.write("""
-    Ce projet a été développé dans le cadre d'un **mémoire de Master 2** en
-    Physique Atomique, Moléculaire et Biophysique.
-
-    - **Étudiante** : Sorelle
-    - **Encadrant** : Dr. TCHAPET NJAFA Jean-Pierre
-    - **Conseiller** : Prof. NANA Engo
-    - **Année** : 2025-2026
-    """)
-
-    st.subheader("🔬 Méthodologie")
-    st.write("""
-    - **Dataset** : 1000 patients synthétiques (distributions réalistes)
-    - **Algorithmes testés** : Random Forest, XGBoost, LightGBM, SVM
-    - **Métriques** : Recall (sensibilité) prioritaire, AUC-ROC
-    - **Interprétabilité** : SHAP, LIME
-    """)
-
-    st.subheader("📚 Références scientifiques")
-    st.markdown("""
-    - Katte et al. (2023) - Phénotype DT1 en Afrique subsaharienne
-    - Mbanya et al. (2010) - Diabète en Afrique subsaharienne (*The Lancet*)
-    - Zhang et al. (2022) - Biomarqueurs DT1 par bioinformatique
-    """)
-
-    st.subheader("📞 Contact")
-    st.info("Pour plus d'informations, contacter Dr. TCHAPET NJAFA Jean-Pierre")
-
-    st.markdown("---")
-    st.caption("© 2025 - Projet DT1 Cameroun - Master 2 Biophysique")
-
-# === FOOTER ===
-st.sidebar.markdown("---")
-st.sidebar.caption("🇨🇲 Fait au Cameroun, pour le Cameroun")
-st.sidebar.caption("Version 1.0 - Novembre 2025")
+if __name__ == "__main__":
+    main()

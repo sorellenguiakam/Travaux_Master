@@ -1,29 +1,140 @@
 \chapter{Résultats}
 \label{chap:resultats}
 
+Ce chapitre présente les résultats obtenus lors de l'étude. Nous commençons par une analyse descriptive des données, suivie de l'évaluation des modèles de référence (baseline), et enfin des résultats après optimisation des hyperparamètres.
+
 \section{Statistiques descriptives}
 
-Distribution des données : 25\% DT1+, 75\% DT1-. Âge moyen DT1+ : 25 ans vs. 35 ans DT1-.
-Biomarqueurs : ESCO2 (moyenne DT1+ : 5.24 vs. 2.27), ANP32A-IT1 (4.18 vs. 1.99).
+L'analyse descriptive a été réalisée sur un jeu de données nettoyé comportant 1000 patients, divisé en un ensemble d'entraînement (800) et un ensemble de test (200).
+La répartition des classes révèle un déséquilibre significatif :
+\begin{itemize}
+    \item \textbf{Patients sains (DT1-)} : 75\% de l'effectif.
+    \item \textbf{Patients diabétiques (DT1+)} : 25\% de l'effectif.
+\end{itemize}
 
-[INSÉRER TABLEAUX ET FIGURES]
+Les biomarqueurs montrent des différences notables entre les deux groupes, suggérant un fort potentiel discriminant. Par exemple, l'HbA1c moyenne est significativement plus élevée chez les patients DT1+.
 
-\section{Performances des modèles}
+\section{Performances des modèles baseline}
 
-\subsection{Comparaison baseline}
-[TABLEAU : Accuracy, Recall, Precision, F1, AUC pour les 6 modèles]
+Dans cette phase, nous avons évalué des algorithmes classiques sur le jeu de données standardisé, sans technique particulière de rééquilibrage. Les modèles testés sont la Régression Logistique (LR), l'Arbre de Décision (DT), et le Support Vector Machine (SVM).
 
-\subsection{Modèle final optimisé}
-[VOS RÉSULTATS : meilleur modèle, hyperparamètres optimaux, performances test set]
+L'objectif était d'établir une ligne de base (baseline) pour mesurer l'efficience des approches plus complexes. Le tableau ci-dessous synthétise les performances obtenues sur l'ensemble de test (20\% des données).
 
-\section{Analyse SHAP}
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Modèle Standard} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score} \\
+\hline
+Logistic Regression & 99.5\% & 98.0\% & 100.0\% & 0.990 \\
+Decision Tree & 99.5\% & 98.0\% & 100.0\% & 0.990 \\
+SVM (RBF Kernel) & 100.0\% & 100.0\% & 100.0\% & 1.000 \\
+\hline
+\end{tabular}
+\caption{Performances des modèles baseline (Semaine 3).}
+\label{tab:baseline_results}
+\end{table}
 
-\subsection{Importance des features}
-Top 3 biomarqueurs : [À COMPLÉTER avec vos résultats SHAP]
+On observe des résultats exceptionnellement élevés, notamment pour le SVM qui atteint une séparation parfaite sur ce jeu de test. La Régression Logistique, malgré sa simplicité, offre un Recall de 100\%, ce qui est crucial pour notre application médicale afin de ne manquer aucun cas positif. Ces résultats suggèrent que les biomarqueurs sélectionnés (ESCO2, ANP32A-IT1, etc.) sont très discriminants.
 
-\subsection{Exemples de prédictions}
-Waterfall plots pour patients DT1+ et DT1-.
+\section{Optimisation des hyperparamètres}
 
-\section{Application Streamlit}
+Pour cette phase d'optimisation, nous avons introduit des algorithmes de boosting (XGBoost, LightGBM) et appliqué des techniques d'optimisation pour renforcer la robustesse du modèle face au déséquilibre de classe (25\% de cas positifs). Nous avons comparé l'approche par pénalisation (class weights) et l'approche par génération de données synthétiques (SMOTE).
 
-Démonstration fonctionnelle : upload CSV, prédictions, visualisations, export PDF.
+\subsection{Comparaison des modèles avancés}
+
+Les modèles suivants ont été entraînés et comparés :
+\begin{itemize}
+    \item \textbf{XGBoost Base} : Gradient boosting standard.
+    \item \textbf{XGBoost Balanced} : Avec le paramètre \texttt{scale\_pos\_weight} pour compenser le déséquilibre.
+    \item \textbf{LightGBM} : Optimisé pour la vitesse et la performance.
+    \item \textbf{Random Forest + SMOTE} : Combinaison de bagging et de sur-échantillonnage synthétique.
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/week4_comparaison_modeles.png}
+    \caption{Comparaison des métriques de performance des modèles optimisés.}
+    \label{fig:opt_comparison}
+\end{figure}
+
+Comme illustré par la Figure \ref{fig:opt_comparison} et le Tableau \ref{tab:model_comparison}, tous les modèles avancés maintiennent un Recall de 100\%.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Modèle Optimisé} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} & \textbf{AUC-ROC} \\
+\hline
+XGBoost (Base) & 0.995 & 0.980 & 1.000 & 1.000 \\
+\textbf{XGBoost (Balanced)} & \textbf{0.995} & \textbf{0.980} & \textbf{1.000} & \textbf{1.000} \\
+LightGBM & 0.995 & 0.980 & 1.000 & 1.000 \\
+RF + SMOTE & 1.000 & 1.000 & 1.000 & 1.000 \\
+\hline
+\end{tabular}
+\caption{Performances des modèles après optimisation.}
+\label{tab:model_comparison}
+\end{table}
+
+\subsection{Importance des variables et choix final}
+
+L'analyse de l'importance des caractéristiques (Feature Importance) pour le modèle XGBoost Balanced révèle la hiérarchie des biomarqueurs.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/week4_feature_importance.png}
+    \caption{Importance des variables (XGBoost Balanced).}
+    \label{fig:feature_importance}
+\end{figure}
+
+La Figure \ref{fig:feature_importance} montre que la \textbf{Glycémie à jeun} et l'\textbf{HbA1c} restent les prédicteurs dominants, validant la pertinence clinique du modèle.
+Bien que le Random Forest avec SMOTE affiche des scores parfaits, nous retenons le \textbf{XGBoost Balanced} comme modèle final. Il offre le meilleur compromis entre performance et généralisation, évitant les risques de sur-apprentissage potentiellement induits par SMOTE sur un jeu de données de taille modeste.
+
+\section{Interprétabilité et identification des biomarqueurs}
+\label{sec:interpretability}
+
+Au-delà de la performance brute, l'acceptabilité clinique d'un modèle d'IA repose sur sa capacité à expliquer ses décisions. Nous avons utilisé trois méthodes complémentaires (SHAP, LIME, PDP) pour valider la pertinence biologique du modèle.
+
+\subsection{Analyse globale (SHAP)}
+
+La méthode SHAP (SHapley Additive exPlanations) permet de quantifier la contribution marginale de chaque variable à la prédiction finale. La Figure \ref{fig:shap_summary} présente les biomarqueurs les plus influents.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/week5_shap_importance.png}
+    \caption{Importance globale des biomarqueurs (SHAP Summary Plot).}
+    \label{fig:shap_summary}
+\end{figure}
+
+On confirme que la \textbf{Glycémie à jeun} et l'\textbf{HbA1c} sont les prédicteurs majeurs, ce qui valide la cohérence physiologique du modèle. Parmi les marqueurs génétiques, \textbf{ESCO2} se distingue comme le plus discriminant.
+
+\subsection{Analyse locale et profils patients}
+
+Pour comprendre une décision individuelle, nous avons analysé un patient diagnostiqué positif par le modèle. La Figure \ref{fig:shap_waterfall} (Waterfall Plot) détaille comment chaque valeur a poussé la prédiction vers la classe "Diabétique".
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/week5_shap_waterfall.png}
+    \caption{Explication locale d'une prédiction positive (Individu A).}
+    \label{fig:shap_waterfall}
+\end{figure}
+
+Cette analyse a été croisée avec la méthode LIME (Figure \ref{fig:lime_expl}), qui confirme les mêmes contributeurs principaux pour ce patient, renforçant la fiabilité de l'explication.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/week5_lime_patient_explanation.png}
+    \caption{Confirmation de l'explication locale avec LIME.}
+    \label{fig:lime_expl}
+\end{figure}
+
+\subsection{Analyse des seuils critiques (PDP)}
+
+Les courbes de dépendance partielle (PDP) illustrent l'effet marginal d'une variable. La Figure \ref{fig:pdp} montre la relation entre le niveau d'ESCO2 et la probabilité prédite de DT1.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{figures/week5_partial_dependence.png}
+    \caption{Courbes de dépendance partielle (PDP) pour les biomarqueurs clés.}
+    \label{fig:pdp}
+\end{figure}

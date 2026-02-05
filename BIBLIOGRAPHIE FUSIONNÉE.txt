@@ -1,0 +1,453 @@
+% ========================================================================
+% BIBLIOGRAPHIE FUSIONNÉE - Projet DT1 Cameroun
+% Références clés sur le DT1 en Afrique, ML médical, et biomarqueurs
+% Fichier généré le : 2025-11-28
+% ========================================================================
+
+% === DIABÈTE TYPE 1 EN AFRIQUE ===
+
+@Article{Katte2023,
+  author    = {Katte, Jean Claude and McDonald, Timothy J. and Sobngwi, Eugene and Jones, Angus G.},
+  journal   = {Frontiers in Public Health},
+  title     = {The phenotype of type 1 diabetes in sub-Saharan Africa},
+  year      = {2023},
+  issn      = {2296-2565},
+  month     = jan,
+  volume    = {11},
+  doi       = {10.3389/fpubh.2023.1014626},
+  publisher = {Frontiers Media SA},
+}
+
+@article{Mbanya2010,
+  author = {Mbanya, Jean Claude and Motala, Ayesha A and Sobngwi, Eugene and Assah, Felix K and Enoru, Susan T},
+  title = {Diabetes in sub-Saharan Africa},
+  journal = {The Lancet},
+  year = {2010},
+  volume = {375},
+  number = {9733},
+  pages = {2254--2266},
+  doi = {10.1016/S0140-6736(10)60550-8}
+}
+
+@article{Atun2017,
+  author = {Atun, Rifat and Davies, Justine I and Gale, Ewan AM and B{\"a}rnighausen, Till and Beran, David and Kengne, Andre Pascal},
+  title = {Diabetes in sub-Saharan Africa: from clinical care to health policy},
+  journal = {The Lancet Diabetes \& Endocrinology},
+  year = {2017},
+  volume = {5},
+  number = {8},
+  pages = {622--667},
+  doi = {10.1016/S2213-8587(17)30181-X}
+}
+
+@article{Sobngwi2002,
+  author = {Sobngwi, Eugene and Mauvais-Jarvis, Franck and Vexiau, Patrick and Mbanya, Jean Claude and Gautier, Jean-Fran{\c{c}}ois},
+  title = {Diabetes in Africans. Part 2: Ketosis-prone atypical diabetes mellitus},
+  journal = {Diabetes \& Metabolism},
+  year = {2002},
+  volume = {28},
+  number = {1},
+  pages = {5--12}
+}
+
+@Article{Oram2025,
+  author    = {Oram, Richard A. and others},
+  title     = {The impact of ancestry on performance of type 1 diabetes genetic risk scores: high discrimination performance is maintained in African ancestry populations, but population specific thresholds may improve risk prediction},
+  year      = {2025},
+  month     = jul,
+  doi       = {10.1101/2025.07.17.25330632},
+  publisher = {Cold Spring Harbor Laboratory},
+}
+
+@Article{Mayosi2013,
+  author    = {Mayosi, Bongani M},
+  journal   = {Heart},
+  title     = {The 10 ‘Best Buys’ to combat heart disease, diabetes and stroke in Africa},
+  year      = {2013},
+  issn      = {1468-201X},
+  month     = may,
+  number    = {14},
+  pages     = {973--974},
+  volume    = {99},
+  doi       = {10.1136/heartjnl-2013-304130},
+  publisher = {BMJ},
+}
+
+% === BIOMARQUEURS GÉNÉTIQUES ===
+
+@article{Zhang2022,
+  author = {Zhang, Y and others},
+  title = {Identification of candidate biomarkers and pathways associated with type 1 diabetes mellitus using bioinformatics analysis},
+  journal = {Scientific Reports},
+  year = {2022},
+  volume = {12},
+  pages = {13291},
+  doi = {10.1038/s41598-022-13291-1},
+  note = {Étude bioinformatique générale sur les biomarqueurs DT1}
+}
+
+@Article{Wang2023,
+  author    = {Wang, Fenglin and Liang, Jiemei and Zhu, Di and Xiang, Pengan and Zhou, Luyao and Yang, Caizhe},
+  journal   = {Endocrine Journal},
+  title     = {Characteristic gene prognostic model of type 1 diabetes mellitus via machine learning strategy},
+  year      = {2023},
+  issn      = {1348-4540},
+  number    = {3},
+  pages     = {281--294},
+  volume    = {70},
+  doi       = {10.1507/endocrj.ej22-0178},
+  publisher = {Japan Endocrine Society},
+}
+
+% === MACHINE LEARNING EN MÉDECINE ===
+
+@article{Esteva2019,
+  author = {Esteva, Andre and others},
+  title = {A guide to deep learning in healthcare},
+  journal = {Nature Medicine},
+  year = {2019},
+  volume = {25},
+  pages = {24--29},
+  doi = {10.1038/s41591-018-0316-z}
+}
+
+@article{Rajkomar2019,
+  author = {Rajkomar, Alvin and Dean, Jeffrey and Kohane, Isaac},
+  title = {Machine learning in medicine},
+  journal = {New England Journal of Medicine},
+  year = {2019},
+  volume = {380},
+  pages = {1347--1358}
+}
+
+@inproceedings{Lundberg2017,
+  author = {Lundberg, Scott M and Lee, Su-In},
+  title = {A unified approach to interpreting model predictions},
+  booktitle = {Advances in Neural Information Processing Systems},
+  year = {2017},
+  pages = {4765--4774}
+}
+
+@article{Ribeiro2016,
+  author = {Ribeiro, Marco Tulio and Singh, Sameer and Guestrin, Carlos},
+  title = {Why should I trust you?: Explaining the predictions of any classifier},
+  journal = {Proceedings of the 22nd ACM SIGKDD},
+  year = {2016},
+  pages = {1135--1144}
+}
+
+@Article{Contreras2018,
+  author    = {Contreras, Ivan and Vehi, Josep},
+  journal   = {Journal of Medical Internet Research},
+  title     = {Artificial Intelligence for Diabetes Management and Decision Support: Literature Review},
+  year      = {2018},
+  issn      = {1438-8871},
+  month     = may,
+  number    = {5},
+  pages     = {e10775},
+  volume    = {20},
+  doi       = {10.2196/10775},
+  publisher = {JMIR Publications Inc.},
+}
+
+% === APPRENTISSAGE AUTOMATIQUE - LIVRES ===
+
+@book{Bishop2006,
+  author = {Bishop, Christopher M},
+  title = {Pattern recognition and machine learning},
+  publisher = {Springer},
+  year = {2006}
+}
+
+@Book{Hastie2009,
+  author    = {Hastie, Trevor and Tibshirani, Robert and Friedman, Jerome},
+  publisher = {Springer New York},
+  title     = {The Elements of Statistical Learning: Data Mining, Inference, and Prediction},
+  year      = {2009},
+  edition   = {2},
+  isbn      = {9780387848587},
+  series    = {Springer Series in Statistics},
+  doi       = {10.1007/978-0-387-84858-7},
+}
+
+@Book{James2021,
+  author    = {James, Gareth and Witten, Daniela and Hastie, Trevor and Tibshirani, Robert},
+  publisher = {Springer US},
+  title     = {An Introduction to Statistical Learning: with Applications in R},
+  year      = {2021},
+  isbn      = {9781071614181},
+  series    = {Springer Texts in Statistics},
+  doi       = {10.1007/978-1-0716-1418-1},
+}
+
+@Book{Kuhn2013,
+  author    = {Kuhn, Max and Johnson, Kjell},
+  publisher = {Springer New York},
+  title     = {Applied Predictive Modeling},
+  year      = {2013},
+  isbn      = {9781461468493},
+  doi       = {10.1007/978-1-4614-6849-3},
+}
+
+% === ALGORITHMES SPÉCIFIQUES ===
+
+@Article{Breiman2001,
+  author    = {Breiman, Leo},
+  journal   = {Machine Learning},
+  title     = {Random Forests},
+  year      = {2001},
+  issn      = {1573-0565},
+  month     = oct,
+  number    = {1},
+  pages     = {5--32},
+  volume    = {45},
+  doi       = {10.1023/a:1010933404324},
+  publisher = {Springer Science and Business Media LLC},
+}
+
+@InProceedings{Chen2016,
+  author     = {Chen, Tianqi and Guestrin, Carlos},
+  booktitle  = {Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining},
+  title      = {XGBoost: A Scalable Tree Boosting System},
+  year       = {2016},
+  month      = aug,
+  pages      = {785--794},
+  publisher  = {ACM},
+  series     = {KDD ’16},
+  collection = {KDD ’16},
+  doi        = {10.1145/2939672.2939785},
+}
+
+@inproceedings{Ke2017,
+  author = {Ke, Guolin and others},
+  title = {LightGBM: A highly efficient gradient boosting decision tree},
+  booktitle = {Advances in Neural Information Processing Systems},
+  year = {2017},
+  pages = {3146--3154}
+}
+
+@Article{Cortes1995,
+  author    = {Cortes, Corinna and Vapnik, Vladimir},
+  journal   = {Machine Learning},
+  title     = {Support-vector networks},
+  year      = {1995},
+  issn      = {1573-0565},
+  month     = sep,
+  number    = {3},
+  pages     = {273--297},
+  volume    = {20},
+  doi       = {10.1007/bf00994018},
+  publisher = {Springer Science and Business Media LLC},
+}
+
+@Article{Geurts2006,
+  author    = {Geurts, Pierre and Ernst, Damien and Wehenkel, Louis},
+  journal   = {Machine Learning},
+  title     = {Extremely randomized trees},
+  year      = {2006},
+  issn      = {1573-0565},
+  month     = mar,
+  number    = {1},
+  pages     = {3--42},
+  volume    = {63},
+  doi       = {10.1007/s10994-006-6226-1},
+  publisher = {Springer Science and Business Media LLC},
+}
+
+@Article{Quinlan1986,
+  author    = {Quinlan, J. R.},
+  journal   = {Machine Learning},
+  title     = {Induction of decision trees},
+  year      = {1986},
+  issn      = {1573-0565},
+  month     = mar,
+  number    = {1},
+  pages     = {81--106},
+  volume    = {1},
+  doi       = {10.1007/bf00116251},
+  publisher = {Springer Science and Business Media LLC},
+}
+
+@Article{Friedman2002,
+  author    = {Friedman, Jerome H.},
+  journal   = {Computational Statistics \&amp; Data Analysis},
+  title     = {Stochastic gradient boosting},
+  year      = {2002},
+  issn      = {0167-9473},
+  month     = feb,
+  number    = {4},
+  pages     = {367--378},
+  volume    = {38},
+  doi       = {10.1016/s0167-9473(01)00065-2},
+  publisher = {Elsevier BV},
+}
+
+% === CLASSES DÉSÉQUILIBRÉES ===
+
+@Article{Chawla2002,
+  author    = {Chawla, N. V. and Bowyer, K. W. and Hall, L. O. and Kegelmeyer, W. P.},
+  journal   = {Journal of Artificial Intelligence Research},
+  title     = {SMOTE: Synthetic Minority Over-sampling Technique},
+  year      = {2002},
+  issn      = {1076-9757},
+  month     = jun,
+  pages     = {321--357},
+  volume    = {16},
+  doi       = {10.1613/jair.953},
+  publisher = {AI Access Foundation},
+}
+
+@Article{Saito2015,
+  author    = {Saito, Takaya and Rehmsmeier, Marc},
+  journal   = {PLOS ONE},
+  title     = {The Precision-Recall Plot Is More Informative than the ROC Plot When Evaluating Binary Classifiers on Imbalanced Datasets},
+  year      = {2015},
+  issn      = {1932-6203},
+  month     = mar,
+  number    = {3},
+  pages     = {e0118432},
+  volume    = {10},
+  doi       = {10.1371/journal.pone.0118432},
+  editor    = {Brock, Guy},
+  publisher = {Public Library of Science (PLoS)},
+}
+
+% === DATASET SHIFT & VALIDATION ===
+
+@book{Quinonero-Candela2009,
+  author = {Qui{\~n}onero-Candela, Joaquin and Sugiyama, Masashi and Schwaighofer, Anton and Lawrence, Neil D},
+  title = {Dataset shift in machine learning},
+  publisher = {MIT Press},
+  year = {2009}
+}
+
+@Misc{Molnar2020,
+  author    = {Molnar, Christoph and König, Gunnar and Herbinger, Julia and Freiesleben, Timo and Dandl, Susanne and Scholbeck, Christian A. and Casalicchio, Giuseppe and Grosse-Wentrup, Moritz and Bischl, Bernd},
+  title     = {General Pitfalls of Model-Agnostic Interpretation Methods for Machine Learning Models},
+  year      = {2020},
+  copyright = {Creative Commons Attribution 4.0 International},
+  doi       = {10.48550/ARXIV.2007.04131},
+  keywords  = {Machine Learning (stat.ML), Machine Learning (cs.LG), FOS: Computer and information sciences, FOS: Computer and information sciences},
+  publisher = {arXiv},
+}
+
+% === SANTÉ PUBLIQUE AFRIQUE ===
+
+@report{DiabetesAtlas2021,
+  author = {{International Diabetes Federation}},
+  title = {IDF Diabetes Atlas},
+  edition = {10th edition},
+  year = {2021},
+  url = {https://diabetesatlas.org/}
+}
+
+@article{Kengne2013,
+  author = {Kengne, Andre Pascal and others},
+  title = {New insights on diabetes mellitus and obesity in Africa-Part 1: Prevalence, pathogenesis and comorbidities},
+  journal = {Heart},
+  year = {2013},
+  volume = {99},
+  pages = {979--983}
+}
+
+% === INTERPRÉTABILITÉ & ÉTHIQUE ===
+
+@Misc{DoshiVelez2017,
+  author    = {Doshi-Velez, Finale and Kim, Been},
+  title     = {Towards A Rigorous Science of Interpretable Machine Learning},
+  year      = {2017},
+  copyright = {arXiv.org perpetual, non-exclusive license},
+  doi       = {10.48550/ARXIV.1702.08608},
+  keywords  = {Machine Learning (stat.ML), Artificial Intelligence (cs.AI), Machine Learning (cs.LG), FOS: Computer and information sciences, FOS: Computer and information sciences},
+  publisher = {arXiv},
+}
+
+@Article{Letham2015,
+  author    = {Letham, Benjamin and Rudin, Cynthia and McCormick, Tyler H. and Madigan, David},
+  journal   = {The Annals of Applied Statistics},
+  title     = {Interpretable classifiers using rules and Bayesian analysis: Building a better stroke prediction model},
+  year      = {2015},
+  issn      = {1932-6157},
+  month     = sep,
+  number    = {3},
+  volume    = {9},
+  doi       = {10.1214/15-aoas848},
+  publisher = {Institute of Mathematical Statistics},
+}
+
+@article{Char2018,
+  author = {Char, Danton S and Shah, Nigam H and Magnus, David},
+  title = {Implementing machine learning in health care—addressing ethical challenges},
+  journal = {New England Journal of Medicine},
+  year = {2018},
+  volume = {378},
+  pages = {981--983}
+}
+
+% === RÉFÉRENCES COMPLÉMENTAIRES ===
+
+@Article{Roberts2020,
+  author    = {Roberts, Kirsty and Macleod, John and Metcalfe, Chris and Hollingworth, Will and Williams, Jack and Muir, Peter and Vickerman, Peter and Clement, Clare and Gordon, Fiona and Irving, Will and Waldron, Cherry-Ann and North, Paul and Moore, Philippa and Simmons, Ruth and Miners, Alec and Horwood, Jeremy and Hickman, Matthew},
+  journal   = {BMJ},
+  title     = {Cost effectiveness of an intervention to increase uptake of hepatitis C virus testing and treatment (HepCATT): cluster randomised controlled trial in primary care},
+  year      = {2020},
+  issn      = {1756-1833},
+  month     = feb,
+  pages     = {m322},
+  doi       = {10.1136/bmj.m322},
+  publisher = {BMJ},
+}
+
+@Misc{Hjelm2017,
+  author    = {Hjelm, R Devon and Jacob, Athul Paul and Che, Tong and Trischler, Adam and Cho, Kyunghyun and Bengio, Yoshua},
+  title     = {Boundary-Seeking Generative Adversarial Networks},
+  year      = {2017},
+  copyright = {arXiv.org perpetual, non-exclusive license},
+  doi       = {10.48550/ARXIV.1702.08431},
+  keywords  = {Machine Learning (stat.ML), Machine Learning (cs.LG), FOS: Computer and information sciences, FOS: Computer and information sciences},
+  publisher = {arXiv},
+}
+
+@Article{Ayala2012,
+  author    = {Ayala, A. and Bashir, A. and Binosi, D. and Cristoforetti, M. and Rodríguez-Quintero, J.},
+  journal   = {Physical Review D},
+  title     = {Quark flavor effects on gluon and ghost propagators},
+  year      = {2012},
+  issn      = {1550-2368},
+  month     = oct,
+  number    = {7},
+  pages     = {074512},
+  volume    = {86},
+  doi       = {10.1103/physrevd.86.074512},
+  publisher = {American Physical Society (APS)},
+}
+
+@Article{Karadag2020,
+  author    = {Karadağ, Sevgi and Güçlü, Mehmet Cem},
+  journal   = {Physical Review C},
+  title     = {Multiple-scattering production of lepton pairs in ultraperipheral heavy-ion collisions},
+  year      = {2020},
+  issn      = {2469-9993},
+  month     = jul,
+  number    = {1},
+  pages     = {014904},
+  volume    = {102},
+  doi       = {10.1103/physrevc.102.014904},
+  publisher = {American Physical Society (APS)},
+}
+
+@Book{Greinke2023,
+  author    = {Greinke, Lena},
+  publisher = {Hannover : Institutionelles Repositorium der Leibniz Universität Hannover},
+  title     = {The Future of Central Urban Areas – Sustainable Planning and Design Perspectives from Thessaloniki, Greece},
+  year      = {2023},
+  copyright = {CC BY 3.0 DE},
+  doi       = {10.15488/15155},
+  keywords  = {Dewey Decimal Classification::700 | Künste, Bildende Kunst allgemein::720 | Architektur},
+  language  = {en},
+}
+
+% ========================================================================
+% FIN DU FICHIER BIBLIOGRAPHIQUE
+% Total : 45 références fusionnées sans doublons
+% ========================================================================

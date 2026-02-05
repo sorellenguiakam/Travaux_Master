@@ -1,0 +1,817 @@
+\documentclass[11pt, aspectratio=169]{beamer}
+
+% ============ PACKAGES ============
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{multicol}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+
+% ============ THEME & COLORS ============
+\usetheme{Madrid}
+\usecolortheme{default}
+
+% Couleurs personnalisées (modèle respecté)
+\definecolor{deepblue}{RGB}{0, 51, 102}
+\definecolor{darkgreen}{RGB}{34, 139, 34}
+\definecolor{lightgray}{RGB}{240, 240, 240}
+\definecolor{accent1}{RGB}{220, 53, 69}
+\definecolor{accent2}{RGB}{40, 167, 69}
+
+\setbeamercolor{structure}{fg=deepblue}
+\setbeamercolor{title}{bg=deepblue, fg=white}
+\setbeamercolor{frametitle}{bg=deepblue, fg=white}
+\setbeamercolor{alerted text}{fg=accent1}
+
+% ============ SETTINGS ============
+\setbeamertemplate{navigation symbols}{}
+\setbeamerfont{title}{size=\Large, series=\bfseries}
+\setbeamerfont{frametitle}{size=\large, series=\bfseries}
+
+% ============ DOCUMENT INFO ============
+\title{Détection précoce du Diabète de Type 1 au Cameroun}
+\subtitle{par Apprentissage Automatique : utilisation de biomarqueurs génétiques émergents}
+\author{SORELLE PERELLE NGUIAKAM \\ Étudiante en Master 2 Physique/Biophysique}
+\institute{Université de Yaoundé I \\ Département de Physique}
+\date{Année académique 2025--2026}
+
+\begin{document}
+
+% ============ SLIDE 1: TITLE PAGE ============
+\frame{\titlepage}
+
+% ============ SLIDE 2: OUTLINE ============
+\begin{frame}{Plan de la Présentation}
+  \begin{enumerate}
+    \item Diabète de Type 1 idiopathique en Afrique subsaharienne
+    \item Biomarqueurs et approches diagnostiques traditionnelles
+    \item Apprentissage automatique pour la détection du DT1
+    \item Méthodologie computationnelle du projet
+  \end{enumerate}
+\end{frame}
+
+% ============================================================================
+% SECTION 1: DIABÈTE DE TYPE 1 IDIOPATHIQUE EN AFRIQUE SUBSAHARIENNE
+% ============================================================================
+\section{Diabète de Type 1 idiopathique en Afrique subsaharienne}
+
+% ============ SLIDE 3 ============
+\begin{frame}{Définitions et Classification du DT1}
+  \textbf{Définition du DT1 [IDF Atlas 2021]} :
+  
+  \vspace{0.6em}
+  
+  \begin{columns}[T]
+    \column{0.50\textwidth}
+    \textbf{\color{accent2} DT1 Auto-immun} :
+    \begin{itemize}
+      \item Destruction cellules $\beta$ pancréatiques
+      \item Présence auto-anticorps (GADA, IA-2A)
+      \item Traitement : insuline à vie
+      \item Forme classique Occident
+    \end{itemize}
+    
+    \column{0.50\textwidth}
+    \textbf{\color{accent1} DT1 Idiopathique} :
+    \begin{itemize}
+      \item Absence auto-anticorps détectables
+      \item Mécanisme non élucidé
+      \item 30--40\% cas africains vs 5--10\% Occident
+      \item Diagnostic plus complexe
+    \end{itemize}
+  \end{columns}
+  
+  \vspace{1em}
+  
+  \textbf{Distinction fondamentale} : DT1 (déficit absolu insuline) $\neq$ DT2 (résistance insuline + déficit relatif)
+\end{frame}
+
+% ============ SLIDE 4 ============
+\begin{frame}{Classification : DT1 / DT2 / Formes Hybrides}
+  \begin{table}[h]
+    \tiny
+    \centering
+    \begin{tabularx}{\textwidth}{|l|X|X|X|}
+      \toprule
+      \textbf{Critère} & \textbf{Type 1} & \textbf{Type 2} & \textbf{KPD (Ketosis-Prone)} \\
+      \midrule
+      \textbf{Étiologie} & Auto-immune ou idiopathique & Résistance insuline & Idiopathique africain \\
+      \textbf{Âge} & $<40$ ans typique & $>40$ ans typique & Variable \\
+      \textbf{Auto-anticorps} & Présents (80--95\%) & Absents & Absents (forme africaine) \\
+      \textbf{Acidocétose} & Fréquente au diagnostic & Rare & Très fréquente \\
+      \textbf{Rémission} & Jamais & N/A & Possible temporairement \\
+      \textbf{Prévalence Afrique} & 10\% diabètes & 85\% diabètes & 5--10\% diabètes \\
+      \bottomrule
+    \end{tabularx}
+  \end{table}
+  
+  \vspace{0.8em}
+  
+  \textbf{\textcolor{accent1}{Ketosis-Prone Diabetes (KPD)}} : Forme hybride atypique, fréquente en Afrique subsaharienne, présentation aiguë avec possibilité de rémissions partielles
+\end{frame}
+
+% ============ SLIDE 5 ============
+\begin{frame}{Formes Idiopathiques et Spécificités Africaines}
+  \textbf{\textcolor{accent1}{Proportion élevée de formes idiopathiques}} :
+  
+  \vspace{0.8em}
+  
+  \begin{columns}[T]
+    \column{0.50\textwidth}
+    \textbf{\color{accent2} Présentation clinique} :
+    \begin{itemize}
+      \item Début aigu et brutal
+      \item Acidocétose diabétique (ACD) fréquente
+      \item Rémissions partielles possibles (KPD)
+      \item Réponse initiale variable
+      \item Évolution imprévisible
+    \end{itemize}
+    
+    \column{0.50\textwidth}
+    \textbf{\color{accent1} Contraintes diagnostiques} :
+    \begin{itemize}
+      \item Tests auto-anticorps négatifs
+      \item Coût tests immunologiques : \$50--150 USD
+      \item Infrastructures laboratorires limitées
+      \item Personnel formé insuffisant
+      \item Diagnostic souvent tardif
+    \end{itemize}
+  \end{columns}
+  
+  \vspace{1em}
+  
+  \textcolor{accent1}{\textbf{Contexte ressources limitées}} : Diagnostic repose principalement sur clinique + glycémie capillaire
+\end{frame}
+
+% ============ SLIDE 6 ============
+\begin{frame}{Épidémiologie du DT1 en Afrique subsaharienne}
+  \textbf{Données globales et régionales [IDF 2020--2025]} :
+  
+  \vspace{0.8em}
+  
+  \begin{columns}[T]
+    \column{0.50\textwidth}
+    \textbf{\color{accent2} Afrique subsaharienne} :
+    \begin{itemize}
+      \item $\approx$ 0,8--1,0 million personnes
+      \item $\approx$ 10\% cas mondiaux DT1
+      \item Tendance croissante 2010--2025
+      \item Surveillance sanitaire fragmentée
+      \item Épidémiologie sous-documentée
+      \item Registres nationaux quasi-inexistants
+    \end{itemize}
+    
+    \column{0.50\textwidth}
+    \textbf{\color{accent1} Focus Cameroun [Katte et al. 2023]} :
+    \begin{itemize}
+      \item Prévalence $<1\%$ population générale
+      \item Cas pédiatriques : augmentation majeure
+      \item \textbf{Mortalité 1ère année : 25--30\%}
+      \item Diagnostic souvent en urgence (ACD)
+      \item \textbf{Absence registre national}
+      \item Données hospitalières fragmentaires
+    \end{itemize}
+  \end{columns}
+\end{frame}
+
+% ============ SLIDE 7 ============
+\begin{frame}{Enjeux Cliniques et de Santé Publique}
+  \begin{tcolorbox}[colback=accent1!15, title=\textbf{\small Conséquences du diagnostic tardif}]
+    \begin{itemize}
+      \item \textbf{Acidocétose diabétique (ACD)} : 50--70\% diagnostics vs 15--30\% Europe
+      \item \textbf{Décès précoce} : 25--30\% mortalité 1ère année vs $<5\%$ Occident
+      \item \textbf{Complications chroniques} : rétinopathie, néphropathie accélérées
+      \item \textbf{Coût économique} : Insuline = 10--30\% revenu mensuel familial
+      \item \textbf{Ruptures approvisionnement} : Fréquentes et imprévisibles
+    \end{itemize}
+  \end{tcolorbox}
+  
+  \vspace{0.8em}
+  
+  \textbf{\color{accent2} Impact sur enfants et adolescents} :
+  \begin{itemize}
+    \item Scolarité interrompue
+    \item Stigmatisation sociale
+    \item Qualité de vie fortement dégradée
+  \end{itemize}
+  
+  \vspace{0.6em}
+  
+  \textbf{\textcolor{accent1}{Besoin urgent}} : Outils de détection précoce adaptés au contexte africain
+\end{frame}
+
+% ============================================================================
+% SECTION 2: BIOMARQUEURS ET APPROCHES DIAGNOSTIQUES TRADITIONNELLES
+% ============================================================================
+\section{Biomarqueurs et approches diagnostiques traditionnelles}
+
+% ============ SLIDE 8 ============
+\begin{frame}{Biomarqueurs Immunologiques Classiques}
+  \textbf{Auto-anticorps standards [Katte 2023, Oram 2025]} :
+  
+  \begin{table}[h]
+    \small
+    \centering
+    \begin{tabularx}{0.95\textwidth}{|l|c|c|X|}
+      \toprule
+      \textbf{Biomarqueur} & \textbf{Sensibilité} & \textbf{Spécificité} & \textbf{Performance Afrique} \\
+      \midrule
+      GADA (Anti-GAD65) & 60--70\% & Excellente & \textbf{Réduite} (formes idiopathiques) \\
+      IA-2A (Tyrosine Phosphatase) & 50--60\% & Excellente & \textbf{Réduite} \\
+      IAA (Anti-Insuline) & 40--50\% & Bonne & Faible \\
+      ZnT8A (Zinc Transporter-8) & 50--60\% & Bonne & Complémentaire \\
+      \bottomrule
+    \end{tabularx}
+  \end{table}
+  
+  \vspace{0.8em}
+  
+  \textbf{\textcolor{accent1}{Limites contexte africain}} :
+  \begin{itemize}
+    \item Coût prohibitif : \$50--150 USD/test
+    \item Formes idiopathiques (30--40\%) : auto-anticorps négatifs
+    \item Sensibilité diminuée populations africaines
+    \item Inaccessibilité laboratoires spécialisés
+  \end{itemize}
+\end{frame}
+
+% ============ SLIDE 9 ============
+\begin{frame}{Biomarqueurs Métaboliques}
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+    \textbf{\color{accent2} Biomarqueurs métaboliques} :
+    \begin{itemize}
+      \item \textbf{Glycémie à jeun} : $\geq 7,0$ mmol/L
+      \item \textbf{HGPO} : Hyperglycémie provoquée orale
+      \item \textbf{HbA1c} : $\geq 6,5\%$ (glycation hémoglobine)
+      \item \textbf{Peptide C} : Évaluation fonction $\beta$
+      \item \textbf{HOMA-B} : Indice fonction cellules $\beta$
+    \end{itemize}
+    
+    \column{0.48\textwidth}
+    \textbf{\color{accent2} Stades TrialNet (3 stades)} :
+    \begin{itemize}
+      \item \textbf{Stade 1} : Autoimmunité sans dysglycémie
+      \item \textbf{Stade 2} : Autoimmunité + dysglycémie asymptomatique
+      \item \textbf{Stade 3} : Hyperglycémie symptomatique
+    \end{itemize}
+  \end{columns}
+  
+  \vspace{1em}
+  
+  \textbf{\textcolor{accent1}{Limites pour détection pré-symptomatique}} :
+  \begin{itemize}
+    \item Stades 1--2 difficiles à détecter sans biomarqueurs avancés
+    \item Coût HGPO et HbA1c encore élevé en contexte africain
+    \item Détection souvent au stade 3 (symptomatique)
+  \end{itemize}
+\end{frame}
+
+% ============ SLIDE 10 ============
+\begin{frame}{Biomarqueurs Génétiques et Scores de Risque}
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+    \textbf{\color{accent2} Gènes HLA classiques} :
+    \begin{itemize}
+      \item \textbf{HLA-DR/DQ} : 40--50\% risque total
+      \item Haplotypes DQ2/DQ8 : majeurs Occident
+      \item Haplotypes africains distincts
+      \item Fréquences alléliques différentes
+      \item Divergence évolutive millénaires
+    \end{itemize}
+    
+    \column{0.48\textwidth}
+    \textbf{\color{accent1} Gènes émergents (GWAS)} :
+    \begin{itemize}
+      \item \textbf{ANP32A-IT1} : ARN non-codant, régulation immune
+      \item \textbf{ESCO2} : Apoptose, cycle cellulaire
+      \item \textbf{NBPF1} : Expression pancréatique
+      \item Identifiés par GWAS récents
+      \item Rôle fonctionnel émergent
+    \end{itemize}
+  \end{columns}
+  
+  \vspace{1em}
+  
+  \textbf{\color{accent2} Genetic Risk Scores (GRS)} :
+  \begin{itemize}
+    \item AUC 0,85--0,92 populations occidentales
+    \item \textbf{\textcolor{accent1}{Chute performance Afrique}} : AUC 0,75--0,80 [Oram 2025]
+  \end{itemize}
+\end{frame}
+
+% ============ SLIDE 11 ============
+\begin{frame}{Limites des Approches Diagnostiques en Contexte Africain}
+  \begin{tcolorbox}[colback=accent1!15, title=\textbf{\small Barrières systémiques majeures}]
+    \begin{itemize}
+      \item \textbf{Coût tests immunologiques} : \$50--150 USD/test (auto-anticorps)
+      \item \textbf{Coût tests génétiques} : \$50--200 USD/échantillon (NGS)
+      \item \textbf{Manque laboratoires spécialisés} : Quasi-inexistants hors grandes villes
+      \item \textbf{Personnel formé} : Diabétologie pédiatrique insuffisante
+      \item \textbf{Infrastructure} : Électricité, chaîne du froid, réactifs
+    \end{itemize}
+  \end{tcolorbox}
+  
+  \vspace{0.8em}
+  
+  \textbf{\textcolor{accent1}{Hétérogénéité génétique africaine}} :
+  \begin{itemize}
+    \item Modèles occidentaux entraînés sur populations caucasiennes
+    \item \textbf{Dataset shift} : $P_{\text{train}}(X, Y) \neq P_{\text{test}}(X, Y)$
+    \item Perte de performance prédictive majeure
+    \item Formes idiopathiques sous-représentées datasets occidentaux
+  \end{itemize}
+  
+  \vspace{0.6em}
+  
+  \textbf{\textcolor{accent2}{Conclusion}} : Nécessité approche plus prédictive, accessible et adaptée
+\end{frame}
+
+% ============================================================================
+% SECTION 3: APPRENTISSAGE AUTOMATIQUE POUR LA DÉTECTION DU DT1
+% ============================================================================
+\section{Apprentissage automatique pour la détection du DT1 : état de l'art}
+
+% ============ SLIDE 12 ============
+\begin{frame}{Problème de Classification Binaire en Médecine}
+  \textbf{Formulation du problème} :
+  
+  \vspace{0.6em}
+  
+  \begin{equation*}
+    \text{Classification binaire : } f(X) \rightarrow Y \in \{\text{Sain}, \text{À risque DT1}\}
+  \end{equation*}
+  
+  \vspace{0.6em}
+  
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+    \textbf{\color{accent2} Types de variables (X)} :
+    \begin{itemize}
+      \item \textbf{Cliniques} : âge, sexe, IMC, antécédents familiaux
+      \item \textbf{Métaboliques} : glycémie, HbA1c, peptide C
+      \item \textbf{Génétiques} : ANP32A-IT1, ESCO2, NBPF1, HLA
+      \item Variables mixtes : 20--50 features typiques
+    \end{itemize}
+    
+    \column{0.48\textwidth}
+    \textbf{\color{accent2} Séparation données} :
+    \begin{itemize}
+      \item \textbf{Train} : 60--70\% (entraînement modèle)
+      \item \textbf{Validation} : 15--20\% (optimisation hyperparamètres)
+      \item \textbf{Test} : 15--20\% (évaluation finale)
+      \item \textbf{Stratification} : Préserver ratio DT1+/DT1-
+    \end{itemize}
+  \end{columns}
+\end{frame}
+
+% ============ SLIDE 13 ============
+\begin{frame}{Algorithmes Adaptés aux Données Biomédicales Tabulaires}
+  \begin{table}[h]
+    \tiny
+    \centering
+    \begin{tabularx}{\textwidth}{|l|c|c|c|X|}
+      \toprule
+      \textbf{Algorithme} & \textbf{Performance} & \textbf{Interprétabilité} & \textbf{Scalabilité} & \textbf{Caractéristiques} \\
+      \midrule
+      Régression Logistique & Moyenne & \textbf{Excellente} & Excellente & Baseline interprétable, coefficients linéaires \\
+      k-NN & Bonne & Moyenne & Faible & Basé proximité, simple mais sensible bruit \\
+      Random Forest & \textbf{Très bonne} & Bonne & Bonne & Ensemble arbres, feature importance, robuste \\
+      SVM (RBF) & Bonne & Faible & Moyenne & Kernel trick, efficace haute dimension \\
+      XGBoost & \textbf{Excellente} & Moyenne & Moyenne & Gradient boosting, état de l'art tabulaire \\
+      LightGBM & \textbf{Excellente} & Moyenne & Bonne & Gradient boosting, plus rapide XGBoost \\
+      \bottomrule
+    \end{tabularx}
+  \end{table}
+  
+  \vspace{0.6em}
+  
+  \textbf{\textcolor{accent2}{Choix projet : Random Forest + XGBoost}} :
+  \begin{itemize}
+    \item Performances supérieures sur données tabulaires
+    \item Feature importance intégrée (interprétabilité)
+    \item Robustesse au bruit et overfitting
+  \end{itemize}
+\end{frame}
+
+% ============ SLIDE 14 ============
+\begin{frame}{Déséquilibre de Classes et Métriques Cliniques}
+  \textbf{\textcolor{accent1}{Problème critique}} : Déséquilibre typique 85--95\% sains, 5--15\% DT1
+  
+  \vspace{0.6em}
+  
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+    \textbf{\color{accent1} Illusion Accuracy} :
+    
+    Modèle naïf « toujours sain » :
+    
+    \begin{itemize}
+      \item \textbf{Accuracy = 90\%} ✓
+      \item \textbf{Recall = 0\%} ✗ \textit{(catastrophe!)}
+      \item Tous malades manqués
+      \item Modèle inutile cliniquement
+    \end{itemize}
+    
+    \column{0.48\textwidth}
+    \textbf{\color{accent2} Métriques adaptées} :
+    \begin{itemize}
+      \item \textbf{Recall (Sensibilité)} : $\frac{VP}{VP + FN}$ \textbf{PRIORITAIRE}
+      \item \textbf{F1-Score} : $2 \times \frac{\text{Prec} \times \text{Rec}}{\text{Prec} + \text{Rec}}$
+      \item \textbf{AUC-ROC} : Indépendant seuil
+      \item \textbf{AUC-PR} : Précision-Recall, adapté déséquilibre
+    \end{itemize}
+  \end{columns}
+  
+  \vspace{1em}
+  
+  \textbf{Justification clinique} : Manquer malade (FN) >> Diagnostiquer à tort sain (FP)
+\end{frame}
+
+% ============ SLIDE 15 ============
+\begin{frame}{Rôle du Recall et F1-Score en Contexte Médical}
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+    \textbf{\color{accent2} Coûts asymétriques} :
+    \begin{itemize}
+      \item \textbf{Faux Négatif (FN)} : Patient DT1 non détecté
+      \begin{itemize}
+        \item Retard diagnostic
+        \item Acidocétose potentiellement fatale
+        \item Complications irréversibles
+        \item \textbf{\textcolor{accent1}{Coût : tragédie}}
+      \end{itemize}
+      \vspace{0.4em}
+      \item \textbf{Faux Positif (FP)} : Patient sain diagnostiqué DT1
+      \begin{itemize}
+        \item Investigation complémentaire
+        \item Tests de confirmation
+        \item Anxiété temporaire
+        \item \textbf{Coût : acceptable}
+      \end{itemize}
+    \end{itemize}
+    
+    \column{0.48\textwidth}
+    \textbf{\color{accent2} Solutions techniques} :
+    \begin{itemize}
+      \item \textbf{SMOTE} : Synthetic Minority Over-sampling Technique
+      \item \textbf{Class weights} : Pénaliser erreurs classe minoritaire
+      \item \textbf{Sous-échantillonnage} : Réduire classe majoritaire
+      \item \textbf{Seuil de décision} : Ajuster pour maximiser Recall
+    \end{itemize}
+  \end{columns}
+  
+  \vspace{1em}
+  
+  \textbf{\textcolor{accent1}{Objectif clinique}} : Recall $\geq 90\%$ (détecter 9/10 malades minimum)
+\end{frame}
+
+% ============ SLIDE 16 ============
+\begin{frame}{Interprétabilité : SHAP et LIME}
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+    \textbf{\color{accent2} SHAP (Lundberg 2017)} :
+    \begin{itemize}
+      \item Théorie des jeux (Shapley values)
+      \item Contribution équitable de chaque feature
+      \item \textbf{État de l'art 2020--2025}
+      \item Explications globale + locale
+      \item Robustesse théorique garantie
+      \item Visualisations : waterfall, summary plot
+    \end{itemize}
+    
+    \column{0.48\textwidth}
+    \textbf{\color{accent2} LIME (Ribeiro 2016)} :
+    \begin{itemize}
+      \item Local Interpretable Model-agnostic Explanations
+      \item Approximation locale par modèle simple
+      \item Plus rapide que SHAP
+      \item Moins robuste théoriquement
+      \item Bon compromis vitesse/clarté
+      \item Agnostique au modèle
+    \end{itemize}
+  \end{columns}
+  
+  \vspace{1em}
+  
+  \textbf{\textcolor{accent1}{Importance clinique}} :
+  \begin{itemize}
+    \item Confiance cliniciens nécessite transparence
+    \item Régulation : RGPD (art. 22), EU AI Act 2026 $\Rightarrow$ explicabilité obligatoire
+    \item Identifier biomarqueurs les plus discriminants
+  \end{itemize}
+\end{frame}
+
+% ============ SLIDE 17 ============
+\begin{frame}{Dataset Shift et Limites des Travaux Existants}
+  \textbf{Problème critique : Dataset shift Occident $\rightarrow$ Afrique} :
+  
+  \vspace{0.6em}
+  
+  \begin{equation*}
+    \boxed{P_{\text{train}}(X, Y) \neq P_{\text{test}}(X, Y)}
+  \end{equation*}
+  
+  \vspace{0.6em}
+  
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+    \textbf{\small Entraînement (Occident)} :
+    \begin{itemize}
+      \item >90\% cohortes caucasiennes
+      \item Formes idiopathiques 5--10\%
+      \item Haplotypes HLA DQ2/DQ8 majeurs
+      \item Infrastructure diagnostique complète
+    \end{itemize}
+    
+    \column{0.48\textwidth}
+    \textbf{\small Déploiement (Afrique)} :
+    \begin{itemize}
+      \item Génétique africaine distincte
+      \item Formes idiopathiques 30--40\%
+      \item Haplotypes HLA différents
+      \item Ressources diagnostiques limitées
+    \end{itemize}
+  \end{columns}
+  
+  \vspace{0.8em}
+  
+  \textbf{\textcolor{accent1}{Impact empirique}} : AUC 0,90--0,92 (Occident) $\rightarrow$ 0,75--0,80 (Afrique) [Oram 2025]
+  
+  \vspace{0.6em}
+  
+  \textbf{\textcolor{accent1}{Rareté critique}} : \textbf{ZÉRO étude ML} développée spécifiquement sur données camerounaises/africaines DT1
+\end{frame}
+
+% ============================================================================
+% SECTION 4: MÉTHODOLOGIE COMPUTATIONNELLE DU PROJET
+% ============================================================================
+\section{Méthodologie computationnelle du projet}
+
+% ============ SLIDE 18 ============
+\begin{frame}{Données et Prétraitement}
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+    \textbf{\color{accent2} Sources de données} :
+    \begin{itemize}
+      \item \textbf{Cohortes hospitalières camerounaises}
+      \item Hôpitaux de référence (Yaoundé, Douala)
+      \item Données cliniques + métaboliques
+      \item Biomarqueurs génétiques (ANP32A-IT1, ESCO2, NBPF1, HLA)
+      \item \textit{Note : Données synthétiques si réelles indisponibles}
+    \end{itemize}
+    
+    \column{0.48\textwidth}
+    \textbf{\color{accent2} Critères inclusion/exclusion} :
+    \begin{itemize}
+      \item \textbf{Inclusion} : Âge $<40$ ans, diagnostic confirmé
+      \item \textbf{Exclusion} : Données manquantes $>30\%$, DT2 confirmé
+      \item Consentement éclairé (éthique)
+      \item Taille cible : $n \geq 500$ patients
+    \end{itemize}
+  \end{columns}
+  
+  \vspace{1em}
+  
+  \textbf{\color{accent2} Pipeline de prétraitement} :
+  \begin{enumerate}
+    \item \textbf{Nettoyage} : Suppression doublons, correction erreurs saisie
+    \item \textbf{Valeurs manquantes} : Imputation médiane (si $<20\%$) ou suppression
+    \item \textbf{Encodage} : Variables catégorielles (One-Hot Encoding)
+    \item \textbf{Normalisation} : StandardScaler (moyenne=0, écart-type=1)
+  \end{enumerate}
+\end{frame}
+
+% ============ SLIDE 19 ============
+\begin{frame}{Pipeline d'Apprentissage : Découpage et Déséquilibre}
+  \textbf{\color{accent2} Découpage des données} :
+  
+  \vspace{0.6em}
+  
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+    \textbf{Stratégie retenue} :
+    \begin{itemize}
+      \item \textbf{Train} : 60\% (entraînement)
+      \item \textbf{Validation} : 20\% (optimisation hyperparamètres)
+      \item \textbf{Test} : 20\% (évaluation finale)
+      \item \textbf{Stratification} : Préserver ratio DT1+/DT1-
+      \item \textbf{Validation croisée} : k-fold (k=5) pour robustesse
+    \end{itemize}
+    
+    \column{0.48\textwidth}
+    \textbf{Gestion du déséquilibre} :
+    \begin{itemize}
+      \item \textbf{SMOTE} : Génération synthétique instances minoritaires
+      \item \textbf{Class weights} : Pénaliser erreurs DT1+ (classe minoritaire)
+      \item \textbf{Stratification} : Obligatoire tous splits
+      \item \textbf{Seuil ajusté} : Maximiser Recall
+    \end{itemize}
+  \end{columns}
+  
+  \vspace{1em}
+  
+  \textbf{\textcolor{accent1}{Choix SMOTE}} : Évite perte information (vs sous-échantillonnage) tout en équilibrant classes
+\end{frame}
+
+% ============ SLIDE 20 ============
+\begin{frame}{Modèles Entraînés et Optimisation}
+  \textbf{\color{accent2} Modèles effectivement entraînés} :
+  
+  \vspace{0.6em}
+  
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+    \textbf{Random Forest} :
+    \begin{itemize}
+      \item \textbf{Hyperparamètres optimisés} :
+      \begin{itemize}
+        \item n\_estimators : \{100, 200, 300\}
+        \item max\_depth : \{10, 20, 30, None\}
+        \item min\_samples\_split : \{2, 5, 10\}
+      \end{itemize}
+      \item Feature importance intégrée
+      \item Robuste au bruit
+    \end{itemize}
+    
+    \column{0.48\textwidth}
+    \textbf{XGBoost} :
+    \begin{itemize}
+      \item \textbf{Hyperparamètres optimisés} :
+      \begin{itemize}
+        \item n\_estimators : \{100, 200, 300\}
+        \item max\_depth : \{3, 5, 7\}
+        \item learning\_rate : \{0.01, 0.1, 0.3\}
+      \end{itemize}
+      \item Gradient boosting optimisé
+      \item État de l'art tabulaire
+    \end{itemize}
+  \end{columns}
+  
+  \vspace{1em}
+  
+  \textbf{\color{accent2} Stratégie d'optimisation} :
+  \begin{itemize}
+    \item \textbf{GridSearchCV} : Recherche exhaustive hyperparamètres
+    \item \textbf{Validation croisée 5-fold} : Robustesse évaluation
+    \item \textbf{Métrique optimisée} : F1-Score (équilibre Precision/Recall)
+  \end{itemize}
+\end{frame}
+
+% ============ SLIDE 21 ============
+\begin{frame}{Évaluation et Métriques Retenues}
+  \textbf{\color{accent2} Métriques d'évaluation prioritaires} :
+  
+  \vspace{0.6em}
+  
+  \begin{table}[h]
+    \small
+    \centering
+    \begin{tabularx}{0.90\textwidth}{|l|X|c|}
+      \toprule
+      \textbf{Métrique} & \textbf{Signification clinique} & \textbf{Priorité} \\
+      \midrule
+      \textbf{Recall} & \% vrais DT1 détectés (ne pas manquer malades) & \textbf{Maximale} \\
+      \textbf{F1-Score} & Équilibre Precision/Recall & Élevée \\
+      \textbf{AUC-ROC} & Capacité discrimination globale & Élevée \\
+      \textbf{AUC-PR} & Précision-Recall (adapté déséquilibre) & Moyenne \\
+      \textbf{Accuracy} & \% prédictions correctes & Faible \\
+      \bottomrule
+    \end{tabularx}
+  \end{table}
+  
+  \vspace{0.8em}
+  
+  \textbf{\color{accent2} Critères de choix du modèle final} :
+  \begin{enumerate}
+    \item \textbf{Recall $\geq 90\%$} : Priorité absolue (détection malades)
+    \item \textbf{AUC-ROC $\geq 0.85$} : Performance globale suffisante
+    \item \textbf{F1-Score maximal} : Parmi modèles satisfaisant critères 1--2
+    \item \textbf{Interprétabilité} : Départage ex aequo (Random Forest favori)
+  \end{enumerate}
+\end{frame}
+
+% ============ SLIDE 22 ============
+\begin{frame}{Interprétabilité : Analyse SHAP}
+  \textbf{\color{accent2} Analyse SHAP (SHapley Additive exPlanations)} :
+  
+  \vspace{0.6em}
+  
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+    \textbf{Importance globale} :
+    \begin{itemize}
+      \item \textbf{Summary plot} : Ranking biomarqueurs
+      \item Identifier top 5--10 features discriminantes
+      \item Comparaison ANP32A-IT1, ESCO2, NBPF1 vs HLA
+      \item Validation cohérence biologique
+    \end{itemize}
+    
+    \column{0.48\textwidth}
+    \textbf{Importance locale (par patient)} :
+    \begin{itemize}
+      \item \textbf{Waterfall plot} : Explication individuelle
+      \item Contribution chaque biomarqueur à prédiction
+      \item Transparence pour clinicien
+      \item Confiance décision
+    \end{itemize}
+  \end{columns}
+  
+  \vspace{1em}
+  
+  \textbf{\color{accent2} Visualisations pour cliniciens} :
+  \begin{itemize}
+    \item \textbf{Top features} : Tableau biomarqueurs ordonnés par importance
+    \item \textbf{Explication patient} : Rapport individuel (PDF) avec SHAP waterfall
+    \item \textbf{Interface simple} : Application Streamlit/Flask pour déploiement
+  \end{itemize}
+\end{frame}
+
+% ============ SLIDE 23 ============
+\begin{frame}{Synthèse de la Méthodologie}
+  \begin{tcolorbox}[colback=accent2!10, title=\textbf{\small Pipeline computationnel complet}]
+    \textbf{1. Données} : Cohortes camerounaises, biomarqueurs génétiques (ANP32A-IT1, ESCO2, NBPF1, HLA) + cliniques
+    
+    \textbf{2. Prétraitement} : Nettoyage, imputation, normalisation, stratification
+    
+    \textbf{3. Gestion déséquilibre} : SMOTE + class weights
+    
+    \textbf{4. Modèles} : Random Forest + XGBoost (optimisation GridSearchCV)
+    
+    \textbf{5. Évaluation} : Recall $\geq 90\%$ (priorité), AUC-ROC $\geq 0.85$, F1-Score
+    
+    \textbf{6. Interprétabilité} : SHAP (globale + locale), visualisations cliniciens
+  \end{tcolorbox}
+  
+  \vspace{0.8em}
+  
+  \textbf{\textcolor{accent1}{Originalité scientifique}} :
+  \begin{itemize}
+    \item \textbf{PREMIÈRE} approche ML DT1 données africaines
+    \item Adaptation explicite contexte camerounais (formes idiopathiques, dataset shift)
+    \item Rigueur méthodologique : validation croisée, métriques adaptées
+  \end{itemize}
+\end{frame}
+
+% ============ SLIDE 24 ============
+\begin{frame}{Vision et Impact Attendu}
+  \begin{tcolorbox}[colback=accent2!20, fonttitle=\bfseries, title=Contribution Scientifique Majeure]
+    Ce projet établit les \textbf{fondements} pour systèmes de dépistage DT1 accessibles, coût-efficaces et culturellement adaptés, réduisant la mortalité évitable en Afrique subsaharienne.
+  \end{tcolorbox}
+  
+  \vspace{0.8em}
+  
+  \textbf{\color{accent2} Impact scientifique} :
+  \begin{itemize}
+    \item Publication originale : \textbf{PREMIÈRE étude ML DT1 Afrique}
+    \item Protocole reproductible et open-source
+    \item Données et code partagés (sous éthique appropriée)
+  \end{itemize}
+  
+  \vspace{0.6em}
+  
+  \textbf{\color{accent2} Impact clinique et santé publique} :
+  \begin{itemize}
+    \item Réduction mortalité 1ère année (objectif : 25--30\% $\rightarrow$ $<15\%$)
+    \item Détection pré-symptomatique pour prévention acidocétose
+    \item Outil accessible contexte ressources limitées
+  \end{itemize}
+  
+  \vspace{0.6em}
+  
+  \textbf{\textcolor{accent1}{Enjeu éthique}} : Éviter exacerbation inégalités sanitaires par modèles inadaptés
+\end{frame}
+
+% ============ SLIDE 25: MERCI ============
+\begin{frame}[plain]
+  \Huge
+  \centering
+  \textbf{Merci de votre attention !}
+  
+  \vspace{2em}
+  
+  \Large
+  \textit{Détection précoce du Diabète de Type 1 au Cameroun \\ par Apprentissage Automatique}
+  
+  \vspace{1em}
+  
+  \normalsize
+  \textit{Utilisation de biomarqueurs génétiques émergents \\ (ANP32A-IT1, ESCO2, NBPF1)}
+  
+  \vspace{2em}
+  
+  \normalsize
+  Supervision : Dr. TCHAPET NJAFA Jean-Pierre \\
+  Conseiller scientifique : Prof. NANA Engo
+\end{frame}
+
+
+\end{document}
