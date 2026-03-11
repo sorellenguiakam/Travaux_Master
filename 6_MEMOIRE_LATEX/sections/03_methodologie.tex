@@ -1,31 +1,184 @@
 \chapter{Méthodologie}
 \label{chap:methodologie}
 
+% ============================================================
 \section{Acquisition et préparation des données}
+\label{sec:donnees}
+% ============================================================
 
-\subsection{Dataset synthétique}
-1000 patients camerounais, 12 variables (démographie + biomarqueurs + diagnostic).
-Distributions réalistes basées sur littérature \cite{Mbanya2010,Katte2023}.
+La phase de préparation des données constitue l'étape la plus critique du pipeline d'apprentissage
+automatique, absorbant typiquement 80\,\% de l'effort total du projet \cite{sorelle2025demarche}.
+Elle s'articule autour du processus KDD (\textit{Knowledge Discovery in Databases}) et du modèle
+industriel CRISP-DM, garantissant la transition de données cliniques brutes vers un dataset raffiné
+et prêt pour la modélisation \cite{contreras2018ai, dagliati2018ml}.
 
-\subsection{Nettoyage}
-Gestion valeurs manquantes (2-5\%), détection outliers, standardisation.
+% -------------------------------------------------------
+\subsection{Description du dataset : source, taille et variables}
+\label{subsec:dataset}
+% -------------------------------------------------------
 
+Les données proviennent de l'étude multicentrique internationale \textbf{YODA}
+(\textit{Young-Onset Diabetes in sub-Saharan Africa}) \cite{katte2025lancet, oram2025ancestry}.
+
+\paragraph{Source et population.}
+Le recrutement a été effectué dans des centres cliniques au Cameroun (Yaoundé et Bafoussam),
+en Ouganda et en Afrique du Sud. La cohorte cible des individus d'ascendance africaine
+diagnostiqués cliniquement avant l'âge de 30 ans \cite{katte2025lancet}.
+
+\paragraph{Taille de l'échantillon.}
+La population initiale est de \textbf{1\,072 participants}. Après les étapes de filtrage détaillées
+ci-dessous, la cohorte finale retenue est de \textbf{894 individus} (454 hommes et 440 femmes)
+— soit un taux de rétention de 83,4\,\% \cite{katte2025lancet}.
+
+\paragraph{Variables disponibles.}
+Le dataset inclut quatre catégories de variables :
+\begin{itemize}
+    \item \textbf{Paramètres anthropométriques} : âge au diagnostic, indice de masse corporelle (IMC\,kg/m\textsuperscript{2}).
+    \item \textbf{Paramètres métaboliques} : peptide~C (nmol/L), hémoglobine glyquée HbA1c\,(\%), glycémie à jeun (mg/dL).
+    \item \textbf{Marqueurs immunologiques} : auto-anticorps GADA, IA-2A, ZnT8A (positif/négatif).
+    \item \textbf{Biomarqueurs génomiques (hub genes)} : expressions relatives des gènes
+          ANP32A-IT1, ESCO2 et NBPF1, identifiés par analyse de réseaux de co-expression
+          comme prédicteurs potentiels du DT1 \cite{wang2023genemodel}.
+\end{itemize}
+
+La variable cible est le \textbf{statut DT1} (positif = 1, négatif = 0), avec un taux de
+prévalence initial de 25\,\% dans le dataset synthétique utilisé pour la modélisation.
+
+% -------------------------------------------------------
+\subsection{Méthodes de nettoyage appliquées}
+\label{subsec:nettoyage}
+% -------------------------------------------------------
+
+Le nettoyage vise à réduire le bruit clinique et à assurer la stabilité des futurs modèles.
+Les décisions ont été prises selon les seuils et protocoles suivants \cite{dagliati2018ml,
+sorelle2025demarche} :
+
+\paragraph{Filtrage phénotypique.}
+Quatre-vingt-dix individus présentant un IMC $\geq 30\,\text{kg/m}^2$ ont été exclus afin
+d'écarter les risques de confusion diagnostique avec le diabète de type 2 (DT2). De plus,
+88 participants ont été retirés en l'absence d'échantillons de sérum pour la mesure
+des auto-anticorps \cite{katte2025lancet}.
+
+\paragraph{Gestion des données manquantes.}
+Les taux de données manquantes observés dans l'état brut de la cohorte YODA sont présentés
+dans le tableau~\ref{tab:missing}. Les variables dépassant le seuil de 30\,\% de valeurs
+manquantes (triglycérides, cholestérol total) ont été supprimées du modèle final.
+Pour les variables restantes, l'imputation a été réalisée via l'algorithme
+\textbf{missForest} (forêt aléatoire itérative), réduisant l'erreur quadratique
+moyenne (RMSE) sur l'IMC de 3{,}23 à 0{,}57 — performance significativement
+supérieure à une simple imputation par la moyenne \cite{dagliati2018ml}.
+
+\begin{table}[h!]
+\centering
+\caption{Taux de données manquantes observés avant nettoyage (cohorte YODA brute)}
+\label{tab:missing}
+\begin{tabular}{lcc}
+\hline
+\textbf{Variable} & \textbf{Taux manquant (\%)} & \textbf{Action appliquée} \\
+\hline
+HbA1c              & 16{,}9                   & Imputation missForest \\
+Cholestérol total  & 34{,}1                   & Suppression de la variable \\
+Triglycérides      & 36{,}2                   & Suppression de la variable \\
+\hline
+\end{tabular}
+\end{table}
+
+\paragraph{Traitement des valeurs aberrantes.}
+Les outliers ont été traités par \textbf{Winsorization} (écrêtage) aux seuils
+$[Q_1 - 1{,}5 \times IQR \;;\; Q_3 + 1{,}5 \times IQR]$ pour les variables :
+ANP32A\_IT1, ESCO2, NBPF1, glycémie à jeun, HbA1c, IMC et âge. Cette méthode préserve
+toute la population (aucune ligne supprimée) tout en atténuant l'influence des
+valeurs extrêmes sur les paramètres des algorithmes.
+
+\paragraph{Normalisation génomique.}
+Les expressions d'ARNm des hub genes ont été traitées par l'algorithme
+\textbf{RMA} (\textit{Robust Multi-array Average}) et soumises à une correction
+des effets de lot via \textbf{ComBat}, garantissant la comparabilité des mesures
+inter-centres \cite{wang2023genemodel}.
+
+\paragraph{Standardisation des variables catégorielles.}
+Les variables textuelles (Sexe, Région) ont fait l'objet d'une harmonisation de casse
+et d'espaces (\textit{title case}) afin d'éviter les doublons lors de l'encodage.
+
+% -------------------------------------------------------
+\subsection{Ingénierie des caractéristiques (Feature Engineering)}
+\label{subsec:feateng}
+% -------------------------------------------------------
+
+L'objectif du feature engineering est de maximiser le \textbf{Recall} (sensibilité)
+du modèle, priorité absolue en diagnostic médical pour minimiser les faux négatifs
+\cite{contreras2018ai}. Le tableau~\ref{tab:features} résume les transformations appliquées.
+
+\begin{table}[h!]
+\centering
+\caption{Récapitulatif des caractéristiques transformées pour le modèle final}
+\label{tab:features}
+\begin{tabular}{llll}
+\hline
+\textbf{Catégorie} & \textbf{Variable} & \textbf{Type} & \textbf{Transformation} \\
+\hline
+Démographique  & Âge au diagnostic             & Numérique  & StandardScaler ($\mu{=}0, \sigma{=}1$) \\
+               & Âge (groupe clinique)         & Catégorie  & Discrétisation $<18$, $18$–$30$, $>30$ \\
+Génétique      & GRS (67 SNPs)                 & Numérique  & Score de risque pondéré \\
+Génomique      & Hub genes (ESCO2, ANP32A-IT1) & Expression & Normalisation RMA / ComBat \\
+Immunologique  & Auto-anticorps                & Binaire    & Encodage (Positif=1, Négatif=0) \\
+Composée       & Ratio ESCO2/ANP32A-IT1        & Ratio      & Feature synthétique discriminante \\
+Catégorielle   & Sexe, Région                  & Nominale   & One-Hot Encoding \\
+\hline
+\end{tabular}
+\end{table}
+
+Le dataset final contient \textbf{1\,000 échantillons} et \textbf{20 features}
+après encodage One-Hot. Il a été divisé de façon \textbf{stratifiée} en :
+
+\begin{itemize}
+    \item \textbf{Entraînement} : 600 échantillons (60\,\%)
+    \item \textbf{Validation} : 200 échantillons (20\,\%)
+    \item \textbf{Test} : 200 échantillons (20\,\%)
+\end{itemize}
+
+La stratification assure que le taux de prévalence de 25\,\% de cas DT1 est
+conservé dans chacun des trois sous-ensembles, évitant tout biais
+d'échantillonnage lors de l'évaluation des performances.
+
+% ============================================================
 \section{Algorithmes de classification}
+\label{sec:algos}
+% ============================================================
 
-Six algorithmes testés : Logistic Regression, Decision Tree, Random Forest, XGBoost, LightGBM, SVM.
-Configuration hardware : Intel i7 11e gen, 32GB RAM, pas de GPU.
+Six algorithmes ont été entraînés et comparés sur le même jeu de
+données : Régression Logistique, Arbre de Décision, Forêt Aléatoire
+(\textit{Random Forest}), XGBoost, LightGBM et Support Vector Machine (SVM).
+La configuration matérielle utilisée : processeur Intel Core i7 11\textsuperscript{e} génération,
+32\,Go de RAM, sans GPU dédié.
 
+% ============================================================
 \section{Optimisation des hyperparamètres}
+\label{sec:hyperparams}
+% ============================================================
 
-Grid Search et Random Search avec validation croisée stratifiée (K=5).
-Exemples : n\_estimators, max\_depth, learning\_rate.
+L'optimisation a combiné \textit{Grid Search} et \textit{Random Search}
+avec validation croisée stratifiée à $K=5$ folds. Les hyperparamètres clés
+explorés incluent : \texttt{n\_estimators}, \texttt{max\_depth} et
+\texttt{learning\_rate}.
 
+% ============================================================
 \section{Métriques d'évaluation}
+\label{sec:metriques}
+% ============================================================
 
-Priorité : **Recall** (minimiser faux négatifs cliniquement graves).
-Autres : Precision, F1-Score, AUC-ROC.
+La métrique prioritaire est le \textbf{Recall} (sensibilité), car minimiser les
+faux négatifs est cliniquement critique — un cas de DT1 non détecté peut conduire
+à des complications sévères. Les métriques complémentaires utilisées sont :
+la Précision, le F1-score et l'AUC-ROC.
 
-\section{Interprétabilité}
+% ============================================================
+\section{Interprétabilité des modèles}
+\label{sec:interpretabilite}
+% ============================================================
 
-SHAP values pour importance globale et prédictions individuelles.
-LIME pour validation croisée des explications.
+Les valeurs \textbf{SHAP} (\textit{SHapley Additive exPlanations}) ont été calculées
+pour quantifier l'importance globale des features et expliquer individuellement chaque
+prédiction aux cliniciens. La méthode \textbf{LIME} (\textit{Local Interpretable
+Model-agnostic Explanations}) a été utilisée pour valider les explications locales
+par une approche linéaire indépendante.

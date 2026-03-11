@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rapport Semaine 1 : Introduction Python &amp; ML</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Source+Code+Pro&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 11pt;
+      line-height: 1.7;
+      color: #1a1a2e;
+      background: #fff;
+      padding: 40px 60px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* Header / Title */
+    .header {
+      border-bottom: 3px solid #2563eb;
+      padding-bottom: 18px;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      font-size: 22pt;
+      font-weight: 700;
+      color: #1e3a8a;
+      margin-bottom: 8px;
+    }
+
+    .meta-badge {
+      display: inline-block;
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #86efac;
+      border-radius: 20px;
+      padding: 3px 14px;
+      font-size: 9.5pt;
+      font-weight: 600;
+      margin-top: 6px;
+    }
+
+    h2 {
+      font-size: 13.5pt;
+      font-weight: 700;
+      color: #1e3a8a;
+      margin-top: 28px;
+      margin-bottom: 10px;
+      padding-left: 10px;
+      border-left: 4px solid #2563eb;
+    }
+
+    h3 {
+      font-size: 11.5pt;
+      font-weight: 600;
+      color: #374151;
+      margin-top: 16px;
+      margin-bottom: 8px;
+    }
+
+    p { margin-bottom: 10px; }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 10px;
+    }
+
+    ul li {
+      padding: 4px 0 4px 20px;
+      position: relative;
+    }
+
+    ul li::before {
+      content: "▸";
+      color: #2563eb;
+      position: absolute;
+      left: 0;
+      font-size: 10pt;
+    }
+
+    ul li strong { color: #1e3a8a; }
+
+    /* Cards */
+    .card {
+      background: #f8faff;
+      border: 1px solid #dbeafe;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 12px 0;
+    }
+
+    /* Stats grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .stat-box {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+
+    .stat-box .stat-value {
+      font-size: 20pt;
+      font-weight: 700;
+      display: block;
+    }
+
+    .stat-box .stat-label {
+      font-size: 8.5pt;
+      opacity: 0.85;
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      font-size: 10.5pt;
+    }
+
+    th {
+      background: #1e3a8a;
+      color: white;
+      padding: 9px 14px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    td {
+      padding: 8px 14px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    tr:nth-child(even) td { background: #f0f4ff; }
+
+    .highlight { color: #16a34a; font-weight: 600; }
+
+    /* Note box */
+    .note-box {
+      background: #eff6ff;
+      border-left: 4px solid #2563eb;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 16px;
+      margin: 14px 0;
+      font-size: 10pt;
+      color: #1e40af;
+    }
+
+    /* Next steps */
+    .next-steps {
+      background: #fefce8;
+      border: 1px solid #fde68a;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-top: 20px;
+    }
+
+    .next-steps h2 {
+      border-left-color: #f59e0b;
+      color: #92400e;
+    }
+
+    .next-steps ul li::before { color: #f59e0b; }
+
+    footer {
+      margin-top: 40px;
+      padding-top: 12px;
+      border-top: 1px solid #e5e7eb;
+      font-size: 9pt;
+      color: #9ca3af;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>📘 Rapport Semaine 1 : Introduction Python &amp; ML</h1>
+    <span class="meta-badge">✔ Statut : Terminé</span>
+  </div>
+
+  <h2>Résumé</h2>
+  <p>
+    Cette première semaine a été consacrée à la mise en place de l'environnement de développement
+    et à l'initiation pratique au Machine Learning avec Python. L'objectif principal était de
+    maîtriser les outils fondamentaux (<strong>NumPy, Pandas, Matplotlib</strong>) et de construire
+    un premier modèle prédictif simple pour la détection du <strong>diabète de type 1 (DT1)</strong>.
+  </p>
+
+  <h2>Travail Réalisé</h2>
+
+  <h3>1. Installation et Configuration</h3>
+  <div class="card">
+    <ul>
+      <li><strong>Environnement :</strong> Installation d'Anaconda et création de l'environnement virtuel dédié <code>dt1_cameroun</code> (Python 3.9).</li>
+      <li><strong>Dépendances :</strong> Installation des bibliothèques nécessaires via <code>requirements.txt</code> (NumPy, Pandas, Scikit-learn, Matplotlib, Seaborn).</li>
+      <li><strong>Outils :</strong> Prise en main de <strong>Jupyter Notebook</strong> pour le développement interactif et de <strong>Zotero</strong> pour la gestion bibliographique.</li>
+    </ul>
+  </div>
+
+  <h3>2. Développement Technique</h3>
+  <p>Le travail technique s'est concentré sur le notebook <code>Semaine01_Introduction_Python_ML.ipynb</code>.</p>
+  <div class="card">
+    <ul>
+      <li><strong>Manipulation de Données :</strong> Chargement et exploration d'un jeu de données synthétique préliminaire.</li>
+      <li><strong>Visualisation :</strong> Création de graphiques pour comprendre la distribution des variables (Histogrammes, Scatter plots).</li>
+      <li><strong>Modélisation :</strong> Entraînement d'un modèle d'<strong>Arbre de Décision (Decision Tree)</strong> pour classifier les patients (Sain vs DT1).</li>
+    </ul>
+  </div>
+
+  <h2>Résultats Techniques</h2>
+
+  <h3>Performance du Modèle</h3>
+  <p>Le modèle d'Arbre de Décision a obtenu des résultats excellents sur le jeu de données test :</p>
+
+  <div class="stats-grid">
+    <div class="stat-box">
+      <span class="stat-value">99.50%</span>
+      <span class="stat-label">Accuracy (Exactitude)</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-value">98%</span>
+      <span class="stat-label">Précision (classe DT1)</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-value">100%</span>
+      <span class="stat-label">Rappel / Recall (DT1)</span>
+    </div>
+  </div>
+
+  <h3>Matrice de Confusion</h3>
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>Prédit Sain</th>
+        <th>Prédit DT1</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Réel Sain</strong></td>
+        <td class="highlight">141 (Vrais Négatifs)</td>
+        <td>1 (Faux Positif)</td>
+      </tr>
+      <tr>
+        <td><strong>Réel DT1</strong></td>
+        <td>0 (Faux Négatifs)</td>
+        <td class="highlight">58 (Vrais Positifs)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note-box">
+    📌 <strong>Note :</strong> Le modèle n'a commis aucune erreur de type « Faux Négatif », ce qui est
+    le résultat souhaité pour un outil de dépistage médical.
+  </div>
+
+  <h3>Importance des Variables</h3>
+  <p>
+    L'analyse de l'importance des variables (<em>Feature Importance</em>) a révélé que la
+    <strong>Glycémie à jeun</strong> est le prédicteur dominant pour ce modèle simple.
+  </p>
+
+  <div class="next-steps">
+    <h2>Prochaines Étapes</h2>
+    <ul>
+      <li>Passer à la <strong>Semaine 2 : Exploration des Données (EDA)</strong>.</li>
+      <li>Générer le jeu de données synthétique plus complexe <code>dataset_dt1_cameroun_synthetic.csv</code> incluant les nouveaux biomarqueurs (ANP32A-IT1, ESCO2, NBPF1).</li>
+      <li>Approfondir l'analyse statistique des données.</li>
+    </ul>
+  </div>
+
+  <footer>
+    Projet Demarche Méthodologique — Master 2 · Génération automatique · Mars 2026
+  </footer>
+
+</body>
+</html>

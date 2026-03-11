@@ -1,5 +1,0 @@
-\babel@toc {french}{}\relax 
-\beamer@sectionintoc {1}{Diabète de Type 1 idiopathique en Afrique subsaharienne}{3}{0}{1}
-\beamer@sectionintoc {2}{Biomarqueurs et approches diagnostiques traditionnelles}{8}{0}{2}
-\beamer@sectionintoc {3}{Apprentissage automatique pour la détection du DT1 : état de l'art}{12}{0}{3}
-\beamer@sectionintoc {4}{Méthodologie computationnelle du projet}{18}{0}{4}
